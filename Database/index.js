@@ -5,9 +5,9 @@ module.exports = class Database {
         this.database = new sqlite3.Database(file);
     }
 
-    getStudentByID(studentid) {
+    getStudent(name, standard) {
         return new Promise((resolve, reject) => {
-            this.database.get(`SELECT roll_no, class, name FROM students WHERE id="${studentid.toLowerCase()}"`, [], (err, row) => {
+            this.database.get(`SELECT roll_no, id, class, name FROM students WHERE (name="${name}" AND class="${standard.toUpperCase()}")`, [], (err, row) => {
                 if (err) {
                     reject(err);
                 } else {
