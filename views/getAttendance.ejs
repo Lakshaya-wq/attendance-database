@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <title>Attendance</title>
+</head>
+<body>
+    <table class="table table-bordered table-dark table-striped table-hover">
+        <thead>
+            <th>date</th>
+            <th>name</th>
+            <th>attendance</th>
+        </thead>
+        <tbody>
+            <% for (let day of attendance) { %>
+                <tr>
+                    <td><%= day.date %></td>
+                    <td><%= day.name %></td>
+                    <td><%= (day.att === 'P') ? 'Present' : 'Absent' %></td>
+                </tr>
+            <% } %> 
+        </tbody>
+    </table>
+    <center>
+        <% if (parseInt(pcnt.replace('%')) >= 70) { %>
+            <h1 style="color: green;">Student Attendance <%= pcnt %></h1>
+        <% } else if ((parseInt(pcnt.replace('%')) >= 40)) { %>
+            <h1 style="color: orange;">Student Attendance <%= pcnt %></h1>
+        <% } else { %>
+            <h1 style="color: red;">Student Attendance <%= pcnt %></h1>
+        <% } %>
+    </center>
+</body>
+</html>

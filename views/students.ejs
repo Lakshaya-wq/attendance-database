@@ -13,14 +13,12 @@
         <table class="table table-bordered table-dark table-striped table-hover">
             <thead>
                 <th>Roll no</th>
-                <th>Student ID</th>
                 <th>Name</th>
             </thead>
             <tbody>
                 <% for (let student of students) { %>
                     <tr>
                         <td><%= student.roll_no %> </td>
-                        <td><%= student.id %> </td>
                         <td><%= student.name %> </td>
                     </tr>
                 <% } %> 
