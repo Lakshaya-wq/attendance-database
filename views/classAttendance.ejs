@@ -28,12 +28,12 @@
         </tbody>
     </table>
     <center>
-        <% if (parseInt(pcnt.replace('%')) >= 70) { %>
-            <h1 style="color: green;">Class Attendance <%= pcnt %></h1>
-        <% } else if ((parseInt(pcnt.replace('%')) >= 40)) { %>
-            <h1 style="color: orange;">Class Attendance <%= pcnt %></h1>
+        <% if (pcnt >= 70) { %>
+            <h1 style="color: green;">Class Attendance <%= pcnt %>%</h1>
+        <% } else if (pcnt >= 40) { %>
+            <h1 style="color: orange;">Class Attendance <%= pcnt %>%</h1>
         <% } else { %>
-            <h1 style="color: red;">Class Attendance <%= pcnt %></h1>
+            <h1 style="color: red;">Class Attendance <%= pcnt %>%</h1>
         <% } %>
     </center>
 </body>

@@ -7,11 +7,12 @@
     <title>Form</title>
 </head>
 <body>
-    <form action="/form-submit" method="post">
+    <form action="/attendance" method="GET">
         <% for (let student of students) { %>
-            <input type="checkbox" name="<%= student.roll_no %>" value="true" checked="true">
+            <%= student.name %> <input type="checkbox" name="present[<%= student.id %>]" value="true" checked="true"><br><br>
         <% } %>
-        <input type="submit" value="Submit" />
+        <input type="text" name="standard" value="<%= standard %>" readonly required hidden>
+        <input type="submit" value="Update attendance">
     </form>
 </body>
 </html>
