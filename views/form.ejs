@@ -4,15 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <title>Form</title>
 </head>
 <body>
+    <div>
+        <div class="ribbon-wrapper">
+            <div class="ribbon">DEV</div>
+        </div>
+    </div>
     <form action="/attendance" method="GET">
-        <% for (let student of students) { %>
-            <%= student.name %> <input type="checkbox" name="present[<%= student.id %>]" value="true" checked="true"><br><br>
-        <% } %>
+        <table class="table table-bordered table-light table-striped table-hover">
+            <thead>
+                <th>roll no</th>
+                <th>name</th>
+                <th>attendance</th>
+            </thead>
+            <tbody>
+                <% for (let student of students) { %>
+                    <tr>
+                        <td><%= student.roll_no %></td>
+                        <td><%= student.name %></td>
+                        <td><input type="checkbox" class="form-check-input" name="present[<%= student.id %>]" value="true" checked="true"></td>
+                    </tr>
+                <% } %>
+                <td colspan="3"><center><input type="submit" value="Update attendance" class="btn btn-primary"></center></td>
+            </tbody>
+        </table>
         <input type="text" name="standard" value="<%= standard %>" readonly required hidden>
-        <input type="submit" value="Update attendance">
+        <input type="text" name="date" readonly required hidden value="<%= date %>">
     </form>
 </body>
 </html>

@@ -44,7 +44,7 @@ module.exports = class Database {
 
     getAttendanceByClass(standard) {
         return new Promise((resolve, reject) => {
-            this.database.all(`SELECT roll_no, date, name, att FROM attendance WHERE class="${standard.toUpperCase()}"`, [], (err, rows) => {
+            this.database.all(`SELECT roll_no, date, name, att FROM attendance WHERE class="${standard.toUpperCase()}" ORDER BY roll_no ASC`, [], (err, rows) => {
                 if (err) reject(err);
                 else resolve(rows);
             })

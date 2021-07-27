@@ -1,15 +1,48 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #282c34 !important;
 }
-
 a {
   color: #00B7FF;
 }
-
 table thead {
   width: 100% !important;
 }
-
 table {
   text-align: center;
 }
+.table {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.ribbon-wrapper {
+  width: 85px;
+  height: 88px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+}
+
+.ribbon {
+  font: bold 15px sans-serif;
+  color: #333;
+  text-align: center;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform:    rotate(-45deg);
+  -ms-transform:     rotate(-45deg);
+  -o-transform:      rotate(-45deg);
+  position: relative;
+  padding: 7px 0;
+  top: 15px;
+  left: -30px;
+  width: 120px;
+  background-color: lightgreen;
+  color: #fff;
+}
+

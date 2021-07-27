@@ -9,7 +9,12 @@
     <title>Attendance</title>
 </head>
 <body>
-    <table class="table table-bordered table-dark table-striped table-hover">
+    <div>
+        <div class="ribbon-wrapper">
+          <div class="ribbon">DEV</div>
+        </div>
+      </div>
+    <table class="table table-bordered table-light table-striped table-hover">
         <thead>
             <th>date</th>
             <th>name</th>
@@ -27,7 +32,7 @@
     </table>
     <center>
         <% if (parseInt(pcnt.replace('%')) >= 70) { %>
-            <h1 style="color: green;">Student Attendance <%= pcnt %></h1>
+            <h1 style="color: lightgreen;">Student Attendance <%= pcnt %></h1>
         <% } else if ((parseInt(pcnt.replace('%')) >= 40)) { %>
             <h1 style="color: orange;">Student Attendance <%= pcnt %></h1>
         <% } else { %>

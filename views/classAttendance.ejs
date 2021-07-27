@@ -9,7 +9,12 @@
     <title>Class Attendance</title>
 </head>
 <body>
-    <table class="table table-bordered table-dark table-striped table-hover">
+    <div>
+        <div class="ribbon-wrapper">
+          <div class="ribbon">DEV</div>
+        </div>
+      </div>
+    <table class="table table-bordered table-light table-striped table-hover">
         <thead>
             <th>roll no</th>
             <th>date</th>
@@ -29,11 +34,11 @@
     </table>
     <center>
         <% if (pcnt >= 70) { %>
-            <h1 style="color: green;">Class Attendance <%= pcnt %>%</h1>
+            <h1 style="color: lightgreen;">Class Attendance <%= pcnt %>% 👍</h1>
         <% } else if (pcnt >= 40) { %>
             <h1 style="color: orange;">Class Attendance <%= pcnt %>%</h1>
         <% } else { %>
-            <h1 style="color: red;">Class Attendance <%= pcnt %>%</h1>
+            <h1 style="color: red;">Class Attendance <%= pcnt %>% 👎</h1>
         <% } %>
     </center>
 </body>
