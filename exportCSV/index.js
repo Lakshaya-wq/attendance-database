@@ -1,18 +1,12 @@
-const { spawnSync } = require('child_process');
-const { writeFileSync } = require('fs');
+const { execSync } = require('child_process');
 
-module.exports = function(filePath, outPath, table) {
+module.exports = function(filePath, table, standard) {
     return new Promise((resolve, reject) => {
-        var value = spawnSync('sqlite3', ['-header', '-csv', filePath, `select * from ${table};`]);
-        if (value.error) {
-            reject(value.error);
-        } else {
-            try {
-                writeFileSync(outPath, value.stdout.toString());
-                resolve(`File written to ${filePath}`);
-            } catch (e) {
-                reject(e);
-            }
+        try {
+            var exported = execSync(`sqlite3 -header -csv ${filePath} "select * from ${table} where class=\\"${standard.toUpperCase()}\\";"`);
+            resolve(exported.toString());
+        } catch (e) {
+            reject(e.message);
         }
-    });
+    })
 }

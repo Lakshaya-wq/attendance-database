@@ -1,2 +1,2 @@
-declare function _exports(filePath: string, outPath: string, table: string): Promise<string>;
+declare function _exports(filePath: string, table: string, standard: string): Promise<string>;
 export = _exports;

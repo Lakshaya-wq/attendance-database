@@ -14,6 +14,16 @@
           <div class="ribbon">DEV</div>
         </div>
       </div>
+      <center>
+        <h1 style="color: white;">Class Attendance for <%= standard.toUpperCase() %></h1>
+        <% if (pcnt >= 70) { %>
+            <h2 style="color: lightgreen;">Class Attendance <%= pcnt %>% 👍</h2>
+        <% } else if (pcnt >= 40) { %>
+            <h2 style="color: orange;">Class Attendance <%= pcnt %>%</h2>
+        <% } else { %>
+            <h2 style="color: red;">Class Attendance <%= pcnt %>% 👎</h2>
+        <% } %>
+    </center>
     <table class="table table-bordered table-light table-striped table-hover">
         <thead>
             <th>roll no</th>
@@ -29,17 +39,9 @@
                     <td><%= day.name %></td>
                     <td><%= (day.att === 'P') ? 'Present' : 'Absent' %></td>
                 </tr>
-            <% } %> 
+            <% } %>
+            <td colspan="4"><form method="POST" action="/export"><input type="text" hidden required name="standard" value="<%= standard %>"><input type="submit" value="download report" class="btn btn-primary"></form></td>
         </tbody>
     </table>
-    <center>
-        <% if (pcnt >= 70) { %>
-            <h1 style="color: lightgreen;">Class Attendance <%= pcnt %>% 👍</h1>
-        <% } else if (pcnt >= 40) { %>
-            <h1 style="color: orange;">Class Attendance <%= pcnt %>%</h1>
-        <% } else { %>
-            <h1 style="color: red;">Class Attendance <%= pcnt %>% 👎</h1>
-        <% } %>
-    </center>
 </body>
 </html>

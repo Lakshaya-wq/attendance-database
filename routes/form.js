@@ -6,12 +6,12 @@ const database = new Database('db.sqlite3');
 /* GET home page. */
 router.get('/attendance/:standard', async function(req, res, next) {
     var { standard } = req.params;
-    var { date } = req.query;
+    var date = new Date();
     var students = await database.getStudentsByClass(standard);
     res.render('form', {
         students: students,
         standard: standard,
-        date: date
+        date: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
     });
 });
 
