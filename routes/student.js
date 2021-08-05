@@ -1,23 +1,33 @@
-var express = require('express');
-var router = express.Router();
-var Database = require('../Database');
+let express = require('express');
+let router = express.Router();
+let Database = require('../Database');
 const database = new Database('db.sqlite3');
+let { readFileSync } = require('fs');
 
 // dynamic router based on the standard and the student
 // it is provided
-router.get('/student/:standard/:student', async function(req, res, next) {
+router.get('/student', async function(req, res, next) {
   // get the student from the request url
-  var { student } = req.params;
+  let { roll_no } = req.query;
   // get the standard from the request url
-  var { standard } = req.params;
+  let { standard } = req.query;
   // get the attendance from the database
   // depending upon the student roll no and standard
-  var attendance = await database.getAttendance(student, standard);
+  let student = await database.getStudent(roll_no, standard);
+  let attendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString())[standard.toUpperCase()];
+  let dates = Object.keys(attendance);
   // render getAttendance.ejs with the attendance of the student and the percentage of his attendance
-  res.render('getAttendance', {
-    attendance: attendance,
-    pcnt: `${parseInt((attendance.filter(({att}) => att === 'P').length * 100) / attendance.length)}%`
-  });
+  if (dates.length >= 1) {
+    res.render('getAttendance', {
+      attendance: attendance,
+      student: student,
+      dates: dates
+    });
+  } else {
+    res.render('error', {
+      message: `No Records for attendance of student '${student.name}'`
+    })
+  }
 });
 
 module.exports = router;

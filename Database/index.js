@@ -35,7 +35,7 @@ module.exports = class Database {
 
     getAttendance(roll_no, standard) {
         return new Promise((resolve, reject) => {
-            this.database.all(`SELECT date, name, att FROM attendance WHERE (roll_no="${roll_no}" AND class="${standard.toUpperCase()}")`, [], (err, rows) => {
+            this.database.all(`SELECT * FROM attendance WHERE (roll_no="${roll_no}" AND class="${standard.toUpperCase()}")`, [], (err, rows) => {
                 if (err) reject(err);
                 else resolve(rows);
             });
@@ -51,11 +51,45 @@ module.exports = class Database {
         })
     }
 
+    getClassAttendanceByDate(standard, date) {
+        return new Promise((resolve, reject) => {
+            this.database.all(`SELECT roll_no, name, att FROM attendance WHERE (class="${standard.toUpperCase()}" AND date="${date}") ORDER BY roll_no ASC`, [], (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows);
+            })
+        })
+    }
+
     setAttendance(date, standard, roll_no, name, att) {
         this.database.all(`SELECT * FROM attendance WHERE (date="${date}" AND class="${standard.toUpperCase()}" AND roll_no=${roll_no})`, [], (err, rows) => {
             if (rows.length === 0) {
                 this.database.prepare(`INSERT INTO attendance VALUES (?, ?, ?, ?, ?)`).run(date, standard.toUpperCase(), roll_no, name, att);
             }
         })
+    }
+
+    // setDummyAttendance(date, standard, roll_no, att) {
+    //     this.database.get(`SELECT COUNT(*) AS CNTREC FROM pragma_table_info('dummyattendance') WHERE name='${date}'`, [], (err, row) => {
+    //         if (row.CNTREC === 1) {
+    //             console.log("yes");
+    //             this.database.prepare(`UPDATE dummyattendance SET date=? WHERE (roll_no=${roll_no} AND class="${standard.toUpperCase()}")`).run(att);
+    //         } else {
+    //             this.database.prepare(`ALTER dummyattendance ADD ${date}`)
+    //         }
+    //     })
+    //     // if ()
+    //     // this.database.prepare(`UPDATE dummyattendance SET date=? WHERE (roll_no=${roll_no} AND standard="${standard.toUpperCase()}")`).run(att);
+    // }
+
+    getDates(standard) {
+        return new Promise((resolve, reject) => {
+            this.database.all(`SELECT date FROM attendance WHERE class="${standard.toUpperCase()}" GROUP BY date;`, [], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
     }
 }

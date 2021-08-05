@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Database</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light navbar-expand-md" style="opacity: 100%;" role="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand">Attendance Database</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/attendance/x" target="_blank">Class X</a></li>
+                            <li><a class="dropdown-item" href="/attendance/xi" target="_blank">Class XI</a></li>
+                            <li><a class="dropdown-item" href="/attendance/xii" target="_blank">Class XII</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">Check Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <li><a class="dropdown-item" href="/class/x" target="_blank">Class X</a></li>
+                            <li><a class="dropdown-item" href="/class/xi" target="_blank">Class XI</a></li>
+                            <li><a class="dropdown-item" href="/class/xii" target="_blank">Class XII</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown3" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Student Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                            <li>
+                                <form class="d-flex dropdown-item form-group-lg" method="GET" action="/student" target="_blank">
+                                    <input class="form-control form-control-sm" type="text" placeholder="class" aria-label="Class" name="standard" maxlength="3" minlength="1" autocapitalize="characters" autocomplete="off" required>&nbsp;
+                                    <input class="form-control form-control-sm" type="text" placeholder="roll no" aria-label="Roll No" name="roll_no" maxlength="2" minlength="1" autocapitalize="characters" autocomplete="off" required>&nbsp;
+                                    <input type="submit" value="Go" class="btn btn-sm btn-outline-secondary">
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="banner">
+        <center>
+            <h1>Attendance Database</h1>
+            <!-- <h2>Made with 💛 by <a target="_blank" href="//github.com/Lakshaya-wq">Lakshaya Utreja</a></h2> -->
+        </center>
+    </div>
+</body>
+</html>

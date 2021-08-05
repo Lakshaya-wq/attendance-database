@@ -1,6 +1,7 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #282c34 !important;
+  color: white;
 }
 a {
   color: #00B7FF;
@@ -46,3 +47,58 @@ table {
   color: #fff;
 }
 
+
+li form {
+  width: 400px !important;
+}
+
+li form input[type=text] {
+  text-transform: uppercase;
+}
+
+div.banner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+  background: grey;
+  height: 5px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  color: white;
+}
+
+.date {
+  color: white;
+}
+
+.error {
+  color: red;
+}
+
+th {
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+
+.bi-house {
+  float: right;
+  right: 0;
+}

@@ -7,5 +7,7 @@ declare class Database {
     getStudentsByClass(standard: string): Promise<object[]>;
     getAttendance(roll_no: number, standard: string): Promise<object[]>;
     getAttendanceByClass(standard: string): Promise<object[]>;
+    getClassAttendanceByDate(standard: string, date: string): Promise<object[]>;
     setAttendance(date: string, standard: string, roll_no: number, name: string, att: string): void;
+    getDates(standard: string): Promise<object[]>;
 }
