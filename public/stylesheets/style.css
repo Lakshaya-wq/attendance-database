@@ -49,10 +49,13 @@ table {
 
 
 li form {
-  width: 400px !important;
+  padding: 0;
+  width: auto;
 }
 
 li form input[type=text] {
+  max-width: 100px;
+  width: auto;
   text-transform: uppercase;
 }
 
@@ -101,4 +104,6 @@ th {
 .bi-house {
   float: right;
   right: 0;
+  width: 2.5vw;
+  height: 2.5vw;
 }
