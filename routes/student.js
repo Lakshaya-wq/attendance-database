@@ -25,7 +25,7 @@ router.get('/student', async function(req, res, next) {
     });
   } else {
     res.render('error', {
-      message: `No Records for attendance of student '${student.name}'`
+      message: `No Records for attendance of this student`
     })
   }
 });

@@ -4,6 +4,9 @@ let Database = require('../Database');
 const database = new Database('db.sqlite3');
 let { writeFileSync, readFileSync } = require('fs');
 
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+
 /* GET home page. */
 router.get('/attendance/:standard', async function(req, res, next) {
     let { standard } = req.params;

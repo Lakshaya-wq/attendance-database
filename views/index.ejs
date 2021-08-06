@@ -17,19 +17,19 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100%; height: 100%; position: relative;">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">Attendance</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute; z-index: 1;">
                             <li><a class="dropdown-item" href="/attendance/x" target="_blank">Class X</a></li>
                             <li><a class="dropdown-item" href="/attendance/xi" target="_blank">Class XI</a></li>
                             <li><a class="dropdown-item" href="/attendance/xii" target="_blank">Class XII</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">Check Attendance</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1" style="position: absolute; z-index: 1;">
                             <li><a class="dropdown-item" href="/class/x" target="_blank">Class X</a></li>
                             <li><a class="dropdown-item" href="/class/xi" target="_blank">Class XI</a></li>
                             <li><a class="dropdown-item" href="/class/xii" target="_blank">Class XII</a></li>
@@ -37,11 +37,16 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown3" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Student Attendance</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3" style="position: absolute; z-index: 1;">
                             <li>
                                 <form class="d-flex dropdown-item form-group-lg" method="GET" action="/student" target="_blank">
-                                    <input class="form-control form-control-sm" type="text" placeholder="class" aria-label="Class" name="standard" maxlength="3" minlength="1" autocapitalize="characters" autocomplete="off" required>&nbsp;
-                                    <input class="form-control form-control-sm" type="text" placeholder="roll no" aria-label="Roll No" name="roll_no" maxlength="2" minlength="1" autocapitalize="characters" autocomplete="off" required>&nbsp;
+                                    <select class="form-select form-select-sm" aria-label="choose a class" name="standard" required>
+                                        <option disabled selected value>-</option>
+                                        <% for (let standard of Object.keys(students)) { %>
+                                            <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
+                                        <% } %>
+                                    </select>&nbsp;
+                                    <select class="form-select form-select-sm" aria-label="choose a student" name="roll_no" required><option disabled selected value>-</option></select>&nbsp;
                                     <input type="submit" value="Go" class="btn btn-sm btn-outline-secondary">
                                 </form>
                             </li>
@@ -57,5 +62,17 @@
             <!-- <h2>Made with 💛 by <a target="_blank" href="//github.com/Lakshaya-wq">Lakshaya Utreja</a></h2> -->
         </center>
     </div>
+    <script type="text/javascript">
+        $('[name="standard"]').change(function() {
+            $('[name="roll_no"]').removeAttr('disabled');
+            var $option = $(this).find('option:selected');
+            var value = $option.val();
+            var students = JSON.parse('<%- JSON.stringify(students) %>')[value];
+            $('[name="roll_no"]').find('option').remove().end();
+            students.map(function({roll_no}) {
+                $(`<option value=${roll_no}>${roll_no}</option>`).appendTo('[name="roll_no"]');
+            });
+        });
+    </script>
 </body>
 </html>

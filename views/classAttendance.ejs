@@ -5,23 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.js" integrity="sha512-h3PJjpIP1iilKum3uQMCAD+X8sJCJ5cpySGZQnyJhK9nFLIzPwkrYs5/qCxnH4dM8XUkUhTdNFjDhUsddvfMug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Class Attendance</title>
 </head>
 <body>
-    <a href="/"><i class="bi bi-house"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" class="bi bi-house" viewBox="0 0 16 16">
+    <a href="/" style="margin-top: 10%;"><i class="bi bi-house"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-house" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
         <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
       </svg></i></a>
-    <div>
+    <!-- <div>
         <div class="ribbon-wrapper">
             <div class="ribbon">DEV</div>
         </div>
-    </div>
+    </div> -->
       <center>
-          <h1 style="color: white;">Class Attendance for <%= standard.toUpperCase() %></h1>
+          <h1 style="color: white; padding-top: 10px;">Class Attendance for <%= standard.toUpperCase() %></h1>
+          <input type="search" class="form-control" id="search" placeholder="&#xF002; search" style="font-family:Arial, FontAwesome; margin-top: 6%; width: 80%;">
         </center>
-    <table class="table table-bordered table-light table-striped table-hover">
+    <table class="table table-bordered table-light table-striped table-hover" id="myTable">
         <thead>
             <th>roll no</th>
             <th>name</th>
@@ -42,6 +46,7 @@
                 </tr>
             <% } %>
             <td colspan="<%= dates.length + 2 %>"><input id="btn" type="submit" value="download report" class="btn btn-primary"></center></td>
+            <td colspan="<%= dates.length + 2 %>" class="notfound" style="display: none;">No record found</td>
         </tbody>
     </table>
     <script>
@@ -77,7 +82,21 @@
             var html = document.querySelector("table").outerHTML;
             export_table_to_csv(html, `${Date.now()}.csv`);
         });
-
+        
+        $(document).ready(function() {
+            $('#search').keyup(function() {
+                var value = $('#search').val().toLowerCase().trim();
+                $("tr").each(function (index) {
+                    if (!index) return;
+                    $(this).find("td").each(function () {
+                        var id = $(this).text().toLowerCase().trim();
+                        var not_found = (id.indexOf(value) == -1);
+                        $(this).closest('tr').toggle(!not_found);
+                        return not_found;
+                    });
+                });
+            });
+        });
     </script>
 </body>
 </html>
