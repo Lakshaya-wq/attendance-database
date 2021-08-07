@@ -6,6 +6,7 @@ var logger = require('morgan');
 var minifyHTML = require('express-minify-html');
 var minify = require('express-minify');
 var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
 
 var studentRouter = require('./routes/student');
 var studentsRouter = require('./routes/students');
@@ -14,6 +15,14 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 
 var app = express();
+var store = new MongoDBStore({
+  uri: process.env.DB_URI,
+  collection: 'frst'
+});
+
+store.on('error', function(error) {
+  console.log(error);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +47,7 @@ app.use(cookieParser());
 app.use(session({
   secret: "2a012d7e474f1bf7704e205168884aafae96528e8481b4e79597079fd5010cd7",
   resave: true,
+  store: store,
 	saveUninitialized: true,
   cookie: {
     maxAge: 1000 * 60* 60
