@@ -128,7 +128,8 @@ mark {
   background-color: yellow !important;
 }
 
-html {
+html, body {
+  height: 100%;
   box-sizing: border-box;
 }
 *, *:before, *:after {

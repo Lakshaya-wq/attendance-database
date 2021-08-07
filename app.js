@@ -5,11 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var minifyHTML = require('express-minify-html');
 var minify = require('express-minify');
+var session = require('express-session');
 
 var studentRouter = require('./routes/student');
 var studentsRouter = require('./routes/students');
 var formRouter = require('./routes/form');
 var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -33,6 +35,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: "2a012d7e474f1bf7704e205168884aafae96528e8481b4e79597079fd5010cd7",
+  resave: true,
+	saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60* 60
+  }
+}));
 
 app.use(minify());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,6 +51,7 @@ app.use('/', studentRouter);
 app.use('/', studentsRouter);
 app.use('/', formRouter);
 app.use('/', indexRouter);
+app.use('/', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -68,19 +68,6 @@ module.exports = class Database {
         })
     }
 
-    // setDummyAttendance(date, standard, roll_no, att) {
-    //     this.database.get(`SELECT COUNT(*) AS CNTREC FROM pragma_table_info('dummyattendance') WHERE name='${date}'`, [], (err, row) => {
-    //         if (row.CNTREC === 1) {
-    //             console.log("yes");
-    //             this.database.prepare(`UPDATE dummyattendance SET date=? WHERE (roll_no=${roll_no} AND class="${standard.toUpperCase()}")`).run(att);
-    //         } else {
-    //             this.database.prepare(`ALTER dummyattendance ADD ${date}`)
-    //         }
-    //     })
-    //     // if ()
-    //     // this.database.prepare(`UPDATE dummyattendance SET date=? WHERE (roll_no=${roll_no} AND standard="${standard.toUpperCase()}")`).run(att);
-    // }
-
     getDates(standard) {
         return new Promise((resolve, reject) => {
             this.database.all(`SELECT date FROM attendance WHERE class="${standard.toUpperCase()}" GROUP BY date;`, [], (err, rows) => {
@@ -89,6 +76,24 @@ module.exports = class Database {
                 } else {
                     resolve(rows);
                 }
+            });
+        });
+    }
+
+    registerUser(email, password) {
+        return new Promise((resolve, reject) => {
+            this.database.prepare(`INSERT INTO users VALUES (null, ?, ?)`).run(email, password, function(err) {
+                if (err) reject(err.message);
+                else resolve({message: "successfully added user"})
+            });
+        });
+    }
+
+    verifyLogin(email) {
+        return new Promise((resolve, reject) => {
+            this.database.get(`SELECT * FROM users WHERE email="${email}"`, [], function(err, row) {
+                if (err) reject(err);
+                else resolve(row);
             });
         });
     }
