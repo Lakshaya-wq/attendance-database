@@ -30,7 +30,7 @@ router.get('/attendance', async function(req, res, next) {
     students.forEach((student) => {
         if (req.query.present && req.query.present[student.id]) {
             attendance[standard.toUpperCase()][date].push(student.roll_no);
-            writeFileSync("./attendance.json", JSON.stringify(attendance, null, 3));
+            writeFileSync("./attendance.json", JSON.stringify(attendance));
         }
     });
     res.render('form', {

@@ -21,9 +21,10 @@
         </div>
     </div> -->
     <center>
-        <h1 class="date" style="padding-top: 10px;">Attendance for class <%= standard.toUpperCase() %> (<%= date %>)</h1>
+        <h1 class="date" style="padding-top: 10px;">Attendance for class <%= standard.toUpperCase() %></h1>
+        <h2 class="date">(<%= date %>)</h2>
         <% if (msg.length >= 1) { %>
-            <div class="alert alert-success alert-dismissible" role="alert" id="myAlert">
+            <div class="alert alert-success alert-dismissible" role="alert" id="myAlert" style="margin-top: 4%;">
                 <%= msg %>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
