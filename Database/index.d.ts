@@ -11,5 +11,5 @@ declare class Database {
     setAttendance(date: string, standard: string, roll_no: number, name: string, att: string): void;
     getDates(standard: string): Promise<object[]>;
     registerUser(email: string, password: string): string;
-    verifyLogin(email: string): Array<any>;
+    verifyLogin(username: string): Array<any>;
 }

@@ -22,17 +22,17 @@
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">Attendance</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute; z-index: 1;">
-                            <li><a class="dropdown-item" href="/attendance/x" target="_blank">Class X</a></li>
-                            <li><a class="dropdown-item" href="/attendance/xi" target="_blank">Class XI</a></li>
-                            <li><a class="dropdown-item" href="/attendance/xii" target="_blank">Class XII</a></li>
+                            <% for (let standard of Object.keys(students)) { %>
+                                <li><a class="dropdown-item" href="/attendance/<%= standard %>" target="_blank">Class <%= standard.toUpperCase() %></a></li>
+                            <% } %>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Attendance</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown1" style="position: absolute; z-index: 1;">
-                            <li><a class="dropdown-item" href="/class/x" target="_blank">Class X</a></li>
-                            <li><a class="dropdown-item" href="/class/xi" target="_blank">Class XI</a></li>
-                            <li><a class="dropdown-item" href="/class/xii" target="_blank">Class XII</a></li>
+                            <% for (let standard of Object.keys(students)) { %>
+                                <li><a class="dropdown-item" href="/class/<%= standard %>" target="_blank">Class <%= standard.toUpperCase() %></a></li>
+                            <% } %>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

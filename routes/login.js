@@ -7,29 +7,33 @@ let crypto = require('crypto');
 /* GET home page. */
 router.get('/login', function(req, res, next) {
     if (req.session.loggedIn) return res.redirect('/');
-    res.render('login.ejs');
+    res.render('login.ejs', {
+        msg: ''
+    });
 });
 
 router.post('/login', async function(req, res, next) {
-    var { email } = req.body;
+    var { username } = req.body;
     var { password } = req.body;
     var hashedPassword = crypto.createHash("md5").update(password).digest("hex");
 
     try {
-        var user = await database.verifyLogin(email);
+        var user = await database.verifyLogin(username);
         if (user) {
-            if (user.email === email && user.password === hashedPassword) {
+            if (user.username === username && user.password === hashedPassword) {
                 req.session.loggedIn = true;
-                req.session.username = user.username;
+                req.session.username = user.fullName;
                 res.redirect('/');
             }
         } else {
-            res.render('error.ejs', {
-                message: 'No such user'
+            res.render('login.ejs', {
+                msg: 'Incorrect username/password'
             });
         }
     } catch (error) {
-        console.log(error.message);
+        res.render('error', {
+            message: error.message
+        });
     }
 });
 

@@ -89,9 +89,9 @@ module.exports = class Database {
         });
     }
 
-    verifyLogin(email) {
+    verifyLogin(username) {
         return new Promise((resolve, reject) => {
-            this.database.get(`SELECT * FROM users WHERE email="${email}"`, [], function(err, row) {
+            this.database.get(`SELECT * FROM users WHERE username="${username}"`, [], function(err, row) {
                 if (err) reject(err);
                 else resolve(row);
             });

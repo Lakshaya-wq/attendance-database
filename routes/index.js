@@ -8,7 +8,9 @@ router.get('/', async function(req, res, next) {
     if (!req.session.loggedIn) return res.redirect('/login');
     var username = req.session.username;
     let students = {
-        x: await database.getStudentsByClass('x'),
+        xa: await database.getStudentsByClass('xa'),
+        xb: await database.getStudentsByClass('xb'),
+        xc: await database.getStudentsByClass('xc'),
         xi: await database.getStudentsByClass('xi'),
         xii: await database.getStudentsByClass('xii')
     }
