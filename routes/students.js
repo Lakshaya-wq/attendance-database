@@ -6,6 +6,7 @@ let { readFileSync } = require('fs');
 
 // dynamic router based on what standard it is passed
 router.get('/class/:standard', async function(req, res, next) {
+  if (!req.session.loggedIn) return res.redirect('/login');
   var { standard } = req.params;
 
   // get the attendance of the standard they requested
@@ -16,7 +17,6 @@ router.get('/class/:standard', async function(req, res, next) {
     // render the classAttendance.ejs file with the attendance,
   res.render('classAttendance', {
     attendance: attendance,
-    pcnt: "100",
     students: students,
     standard: standard,
     dates: dates

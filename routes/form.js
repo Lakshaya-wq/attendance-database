@@ -9,6 +9,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 
 /* GET home page. */
 router.get('/attendance/:standard', async function(req, res, next) {
+    if (!req.session.loggedIn) return res.redirect('/login');
     let { standard } = req.params;
     let date = new Date();
     let students = await database.getStudentsByClass(standard);
@@ -21,6 +22,7 @@ router.get('/attendance/:standard', async function(req, res, next) {
 });
 
 router.get('/attendance', async function(req, res, next) {
+    if (!req.session.loggedIn) return res.redirect('/login');
     let { standard } = req.query;
     let { date } = req.query;
     let students = await database.getStudentsByClass(standard);

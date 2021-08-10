@@ -101,9 +101,10 @@ th {
   top: 0;
 }
 
-.bi-house {
+.bi-house, .right {
   float: right;
-  right: 0;
+  margin-left: auto;
+  margin-right: 5px;
   margin-top: 5px;
 }
 

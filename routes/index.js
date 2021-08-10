@@ -20,4 +20,11 @@ router.get('/', async function(req, res, next) {
     });
 });
 
+// router.get('/sessions', function (req, res) {
+//     req.sessionStore.all((err, sessions) => {
+//         if (err) throw err;
+//         else res.json(sessions);
+//     });
+// });
+
 module.exports = router;

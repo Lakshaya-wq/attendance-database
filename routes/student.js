@@ -7,6 +7,7 @@ let { readFileSync } = require('fs');
 // dynamic router based on the standard and the student
 // it is provided
 router.get('/student', async function(req, res, next) {
+  if (!req.session.loggedIn) return res.redirect('/login');
   // get the student from the request url
   let { roll_no } = req.query;
   // get the standard from the request url
