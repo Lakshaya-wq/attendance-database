@@ -21,10 +21,10 @@
             <div class="ribbon">DEV</div>
         </div>
     </div> -->
-    <center>
-        <h1 style="color: white; padding-top: 10px;">Class Attendance for <%= standard.toUpperCase() %></h1>
-        <input type="search" class="form-control" id="search" placeholder="&#xF002; search" style="font-family:Arial, FontAwesome; margin-top: 6%; width: 80%;">
-    </center>
+      <center>
+          <h1 style="color: white; padding-top: 10px;">Class Attendance for <%= standard.toUpperCase() %></h1>
+          <input type="search" class="form-control" id="search" placeholder="&#xF002; search" style="font-family:Arial, FontAwesome; margin-top: 6%; width: 90%;">
+        </center>
     <table class="table table-bordered table-light table-striped table-hover" id="myTable">
         <thead>
             <th>roll no</th>
@@ -45,11 +45,9 @@
                     <% } %>
                 </tr>
             <% } %>
-            <!-- <tr><td colspan="<%= dates.length + 2 %>">Total: <%= students.length %>, Pr</td></tr> -->
-        </tbody>
-        <tfoot>
             <td colspan="<%= dates.length + 2 %>"><input id="btn" type="submit" value="download report" class="btn btn-primary"></center></td>
-        </tfoot>
+            <td colspan="<%= dates.length + 2 %>" class="notfound" style="display: none;">No record found</td>
+        </tbody>
     </table>
     <script>
         function download_csv(csv, filename) {

@@ -9,15 +9,18 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 
 /* GET home page. */
 router.get('/attendance/:standard', async function(req, res, next) {
-    if (!req.session.loggedIn) return res.redirect('/login');
     let { standard } = req.params;
-    let date = new Date();
+    if (!req.session.loggedIn) return res.redirect(`/login?action=/attendance/${standard}`);
+    let dateObj = new Date();
+    let date = `${dateObj.getDate()}-${dateObj.getMonth()+1}-${dateObj.getFullYear()}`;
     let students = await database.getStudentsByClass(standard);
+    let attendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString())[standard.toUpperCase()][date];
     res.render('form', {
         students: students,
         standard: standard,
-        date: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`,
-        msg: ''
+        date: date,
+        msg: '',
+        attendance: attendance
     });
 });
 
@@ -28,18 +31,24 @@ router.get('/attendance', async function(req, res, next) {
     let students = await database.getStudentsByClass(standard);
     /** @type {object} */
     let attendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString());
-    attendance[standard.toUpperCase()][date] = [];
-    students.forEach((student) => {
-        if (req.query.present && req.query.present[student.id]) {
-            attendance[standard.toUpperCase()][date].push(student.roll_no);
-            writeFileSync("./attendance.json", JSON.stringify(attendance));
-        }
-    });
+    
+    async function writeAttendance() {
+        attendance[standard.toUpperCase()][date] = [];
+        students.forEach((student) => {
+            if (req.query.present && req.query.present[student.id]) {
+                attendance[standard.toUpperCase()][date].push(student.roll_no);
+                writeFileSync("./attendance.json", JSON.stringify(attendance));
+            }
+        });
+    }
+    await writeAttendance();
+    let existingAttendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString())[standard.toUpperCase()][date];
     res.render('form', {
         students: students,
         standard: standard,
         date: `${(new Date()).getDate()}-${(new Date()).getMonth()+1}-${(new Date()).getFullYear()}`,
-        msg: 'Success: set attendance'
+        msg: 'Success: set attendance',
+        attendance: existingAttendance
     })
 });
 

@@ -5,7 +5,7 @@ var database = new Database('db.sqlite3');
 
 // GET home page
 router.get('/', async function(req, res, next) {
-    if (!req.session.loggedIn) return res.redirect('/login');
+    if (!req.session.loggedIn) return res.redirect('/login?action=/');
     var username = req.session.username;
     let students = {
         xa: await database.getStudentsByClass('xa'),

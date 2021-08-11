@@ -45,7 +45,7 @@
                         <tr>
                             <td><%= student.roll_no %></td>
                             <td><%= student.name %></td>
-                            <td><input type="checkbox" class="form-check-input" name="present[<%= student.id %>]" value="true" checked="true"></td>
+                            <td><input type="checkbox" class="form-check-input" name="present[<%= student.id %>]" value="true" <%= attendance && (attendance.indexOf(student.roll_no) !== -1) ? "checked" : "" %>></td>
                         </tr>
                     <% } %>
                     <td colspan="3"><center><input type="submit" value="Update attendance" class="btn btn-primary"></center></td>

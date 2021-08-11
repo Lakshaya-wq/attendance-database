@@ -6,15 +6,18 @@ let crypto = require('crypto');
 
 /* GET home page. */
 router.get('/login', function(req, res, next) {
-    if (req.session.loggedIn) return res.redirect('/');
+    if (req.session.loggedIn) return res.redirect(req.query.action ? req.query.action : '/');
+    var { action } = req.query;
     res.render('login.ejs', {
-        msg: ''
+        msg: '',
+        action: action
     });
 });
 
 router.post('/login', async function(req, res, next) {
     var { username } = req.body;
     var { password } = req.body;
+    var { action } = req.body;
     var hashedPassword = crypto.createHash("md5").update(password).digest("hex");
 
     try {
@@ -23,7 +26,7 @@ router.post('/login', async function(req, res, next) {
             if (user.username === username && user.password === hashedPassword) {
                 req.session.loggedIn = true;
                 req.session.username = user.fullName;
-                res.redirect('/');
+                res.redirect(action ? action : '/');
             }
         } else {
             res.render('login.ejs', {
