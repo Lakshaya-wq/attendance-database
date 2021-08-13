@@ -30,9 +30,30 @@
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Attendance</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown1" style="position: absolute; z-index: 1;">
-                            <% for (let standard of Object.keys(students)) { %>
-                                <li><a class="dropdown-item" href="/class/<%= standard %>" target="_blank">Class <%= standard.toUpperCase() %></a></li>
-                            <% } %>
+                            <form class="d-flex dropdown-item form-group-lg" method="GET" action="/class" target="_blank">
+                                <select class="form-select form-select-sm" aria-label="choose a class" name="standard" required>
+                                    <option disabled selected value>-</option>
+                                    <% for (let standard of Object.keys(students)) { %>
+                                        <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
+                                    <% } %>
+                                </select>&nbsp;
+                                <select class="form-select form-select-sm" aria-label="choose a month" name="month">
+                                    <option disabled selected value>-</option>
+                                    <option value="january">Jan</option>
+                                    <option value="february">Feb</option>
+                                    <option value="march">Mar</option>
+                                    <option value="april">Apr</option>
+                                    <option value="may">May</option>
+                                    <option value="june">Jun</option>
+                                    <option value="july">Jul</option>
+                                    <option value="august">Aug</option>
+                                    <option value="september">Sep</option>
+                                    <option value="october">Oct</option>
+                                    <option value="november">Nov</option>
+                                    <option value="december">Dec</option>
+                                </select>&nbsp;
+                                <input type="submit" value="Go" class="btn btn-sm btn-outline-secondary">
+                            </form>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -40,7 +61,7 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown3" style="position: absolute; z-index: 1;">
                             <li>
                                 <form class="d-flex dropdown-item form-group-lg" method="GET" action="/student" target="_blank">
-                                    <select class="form-select form-select-sm" aria-label="choose a class" name="standard" required>
+                                    <select class="form-select form-select-sm" aria-label="choose a class" name="standard" required id="standard">
                                         <option disabled selected value>-</option>
                                         <% for (let standard of Object.keys(students)) { %>
                                             <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
@@ -68,7 +89,7 @@
         </center>
     </div>
     <script type="text/javascript">
-        $('[name="standard"]').change(function() {
+        $('#standard').change(function() {
             $('[name="roll_no"]').removeAttr('disabled');
             var $option = $(this).find('option:selected');
             var value = $option.val();
@@ -78,19 +99,6 @@
                 $(`<option value=${roll_no}>${roll_no}</option>`).appendTo('[name="roll_no"]');
             });
         });
-        
-        // const delete_cookie = function(name) {
-        //     document.cookie = `${name}=;expires=${(new Date(0)).toUTCString()};`;
-        // };
-        // window.onbeforeunload = function() {
-        //     $.ajax({
-        //         url: '/logout',
-        //         type: 'GET',
-        //         xhrFields: {
-        //             withCredentials: true
-        //         }
-        //     });
-        // }
     </script>
 </body>
 </html>

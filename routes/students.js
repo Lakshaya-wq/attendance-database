@@ -1,36 +1,58 @@
-var express = require('express');
-var router = express.Router();
-var Database = require('../Database');
+let express = require('express');
+let router = express.Router();
+let Database = require('../Database');
 const database = new Database('db.sqlite3');
-let { readFileSync } = require('fs');
+const AttendanceDatabase = require('../models/database');
 
 // dynamic router based on what standard it is passed
-router.get('/class/:standard', async function(req, res, next) {
-  var { standard } = req.params;
-  if (!req.session.loggedIn) return res.redirect(encodeURIComponent(`/login?action=/class/${standard}`));
+router.get('/class/', async function(req, res, next) {
+  let { standard } = req.query;
+  let { month } = req.query;
+  if (!req.session.loggedIn) return res.redirect(`/login?action=${encodeURIComponent(`/class/?standard=${standard}`)}`);
 
   if (standard) {
-    try {
-      let students = await database.getStudentsByClass(standard);
-      let attendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString())[standard.toUpperCase()];
-      let dates = Object.keys(attendance);
-      if (dates.length >= 1) {
-        res.render('classAttendance', {
-          attendance: attendance,
-          students: students,
-          standard: standard,
-          dates: dates
+    if (!month) {
+      try {
+        let students = await database.getStudentsByClass(standard);
+        let attendance = await AttendanceDatabase.find({ standard: standard });
+        if (attendance.length >= 1) {
+          res.render('classAttendance', {
+            attendance: attendance,
+            students: students,
+            standard: standard
+          });
+        } else {
+          res.render('error', {
+          message: `No Records for attendance of class '${standard.toUpperCase()}'`
         });
-      } else {
-        res.render('error', {
-        message: `No Records for attendance of class '${standard.toUpperCase()}'`
-      });
-    }
-      
-    } catch (error) {
-      res.render('error.ejs', {
-        message: error.message
-      })
+      }
+        
+      } catch (error) {
+        res.render('error.ejs', {
+          message: error.message
+        })
+      }
+    } else {
+      try {
+        let students = await database.getStudentsByClass(standard);
+        let attendance = await AttendanceDatabase.find({ standard: standard, month: month.toLowerCase() });
+        if (attendance.length >= 1) {
+          res.render('classAttendance', {
+            attendance: attendance,
+            students: students,
+            standard: standard
+          });
+        } else {
+          res.render('error', {
+          message: `No Records for attendance of class '${standard.toUpperCase()}'`
+        });
+      }
+        
+      } catch (error) {
+        res.render('error.ejs', {
+          message: error.message
+        })
+      }
     }
   } else {
     res.render('error', {

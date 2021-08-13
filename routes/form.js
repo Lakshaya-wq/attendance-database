@@ -2,54 +2,119 @@ let express = require('express');
 let router = express.Router();
 let Database = require('../Database');
 const database = new Database('db.sqlite3');
-let { writeFileSync, readFileSync } = require('fs');
+const AttendanceDatabase = require('../models/database');
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
 
-/* GET home page. */
+/**
+ * @type {Date}
+ * @param {String} _date
+ * @param {String} _format
+ * @param {String} _delimiter
+*/
+const parseDate = (_date,_format,_delimiter) => {
+    var formatLowerCase=_format.toLowerCase();
+    var formatItems=formatLowerCase.split(_delimiter);
+    var dateItems=_date.split(_delimiter);
+    var monthIndex=formatItems.indexOf("mm");
+    var dayIndex=formatItems.indexOf("dd");
+    var yearIndex=formatItems.indexOf("yyyy");
+    var month=parseInt(dateItems[monthIndex]);
+    month-=1;
+    var formattedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+    return formattedDate;
+}
+
+
 router.get('/attendance/:standard', async function(req, res, next) {
     let { standard } = req.params;
     if (!req.session.loggedIn) return res.redirect(`/login?action=/attendance/${standard}`);
     let dateObj = new Date();
     let date = `${dateObj.getDate()}-${dateObj.getMonth()+1}-${dateObj.getFullYear()}`;
     let students = await database.getStudentsByClass(standard);
-    let attendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString())[standard.toUpperCase()][date];
+    let attendance = await AttendanceDatabase.findOne({
+        date: date,
+        standard: standard
+    });
     res.render('form', {
         students: students,
         standard: standard,
         date: date,
-        msg: '',
+        msg: {
+            content: '',
+            type: 'success'
+        },
         attendance: attendance
     });
 });
 
 router.get('/attendance', async function(req, res, next) {
-    if (!req.session.loggedIn) return res.redirect('/login');
     let { standard } = req.query;
+    if (!req.session.loggedIn) return res.redirect(`/login?action=${encodeURIComponent(`/attendance/${standard}`)}`);
     let { date } = req.query;
     let students = await database.getStudentsByClass(standard);
-    /** @type {object} */
-    let attendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString());
-    
-    async function writeAttendance() {
-        attendance[standard.toUpperCase()][date] = [];
-        students.forEach((student) => {
-            if (req.query.present && req.query.present[student.id]) {
-                attendance[standard.toUpperCase()][date].push(student.roll_no);
-                writeFileSync("./attendance.json", JSON.stringify(attendance));
+
+    AttendanceDatabase.findOne({
+        date: date,
+        standard: standard
+    }, async (err, att) => {
+        if (err) return res.render('error', { message: err.message });
+        if (att) {
+            try {
+                await AttendanceDatabase.updateOne({
+                    date: date,
+                    standard: standard
+                },
+                {
+                    present: Object.keys(req.query.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
+                });
+                res.render('form', {
+                    students: students,
+                    standard: standard,
+                    date: date,
+                    msg: {
+                        content: 'Success: updated attendance',
+                        type: 'success'
+                    },
+                    attendance: await AttendanceDatabase.findOne({
+                        date: date,
+                        standard: standard
+                    })
+                });
+            } catch (error) {
+                res.end();
+                console.log(error);
             }
-        });
-    }
-    await writeAttendance();
-    let existingAttendance = JSON.parse(readFileSync("./attendance.json", "utf-8").toString())[standard.toUpperCase()][date];
-    res.render('form', {
-        students: students,
-        standard: standard,
-        date: `${(new Date()).getDate()}-${(new Date()).getMonth()+1}-${(new Date()).getFullYear()}`,
-        msg: 'Success: set attendance',
-        attendance: existingAttendance
-    })
+        } else {
+            var newAttendance = new AttendanceDatabase({
+                month: months[parseDate(date, "dd-mm-yyyy", "-").getMonth()],
+                date: date,
+                standard: standard,
+                present: Object.keys(req.query.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
+            });
+
+            try {
+                await newAttendance.save();
+                
+                res.render('form', {
+                    students: students,
+                    standard: standard,
+                    date: `${(new Date()).getDate()}-${(new Date()).getMonth()+1}-${(new Date()).getFullYear()}`,
+                    msg: {
+                        content: 'Success: set attendance',
+                        type: 'success'
+                    },
+                    attendance: await AttendanceDatabase.findOne({
+                        date: date,
+                        standard: standard
+                    })
+                })
+            } catch (error) {
+                res.render('error', { message: error.message });
+            }
+        }
+    });
 });
 
 module.exports = router;

@@ -29,25 +29,24 @@
         <thead>
             <th>roll no</th>
             <th>name</th>
-            <% for (let date of dates) { %>
-                <th><%= date %></th>
-            <% } %>
+            <% attendance.map(({date}) => { %>
+                <th><%= date %></th>    
+            <% }) %>
         </thead>
         <tbody>
             <% for (let student of students) { %>
                 <tr>
                     <td><%= student.roll_no %></td>
                     <td><%= student.name %></td>
-                    <% for (let day in attendance) { %>
-                        <% if (attendance.hasOwnProperty(day)) { %>
-                            <td><%= (attendance[day].indexOf(student.roll_no) === -1) ? 'A' : 'P' %></td>
-                        <% } %>
+                    <% for (let day of attendance) { %>
+                        <td><%= (day.present.indexOf(student.roll_no) !== -1) ? 'P' : 'A' %></td>
                     <% } %>
                 </tr>
             <% } %>
-            <td colspan="<%= dates.length + 2 %>"><input id="btn" type="submit" value="download report" class="btn btn-primary"></center></td>
-            <td colspan="<%= dates.length + 2 %>" class="notfound" style="display: none;">No record found</td>
         </tbody>
+        <tfoot>
+            <td colspan="<%= attendance.length + 2 %>"><input id="btn" type="submit" value="download report" class="btn btn-primary"></center></td>
+        </tfoot>
     </table>
     <script>
         function download_csv(csv, filename) {

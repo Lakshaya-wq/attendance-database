@@ -23,9 +23,9 @@
     <center>
         <h1 class="date" style="padding-top: 10px;">Attendance for class <%= standard.toUpperCase() %></h1>
         <h2 class="date">(<%= date %>)</h2>
-        <% if (msg.length >= 1) { %>
-            <div class="alert alert-success alert-dismissible" role="alert" id="myAlert" style="margin-top: 4%;">
-                <%= msg %>
+        <% if (msg.content.length >= 1) { %>
+            <div class="alert alert-<%= msg.type %> alert-dismissible" role="alert" id="myAlert" style="margin-top: 4%;">
+                <%= msg.content %>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <% } %>
@@ -45,7 +45,11 @@
                         <tr>
                             <td><%= student.roll_no %></td>
                             <td><%= student.name %></td>
-                            <td><input type="checkbox" class="form-check-input" name="present[<%= student.id %>]" value="true" <%= attendance && (attendance.indexOf(student.roll_no) !== -1) ? "checked" : "" %>></td>
+                            <% if (attendance) { %>
+                                <td><input type="checkbox" class="form-check-input" name="present[<%= student.id %>]" value="true" <%= (attendance["present"].indexOf(student.roll_no) !== -1) ? "checked" : "" %>></td>
+                            <% } else { %>
+                                <td><input type="checkbox" class="form-check-input" name="present[<%= student.id %>]" value="true" checked></td>
+                            <% } %>
                         </tr>
                     <% } %>
                     <td colspan="3"><center><input type="submit" value="Update attendance" class="btn btn-primary"></center></td>
