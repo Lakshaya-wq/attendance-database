@@ -1,21 +1,34 @@
 let Database = require('../Database');
 let database = new Database('db.sqlite3');
 let crypto = require('crypto');
+let express = require('express');
 
 module.exports = {
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     */
     render: (req, res, next) => {
-        if (req.session.loggedIn) return res.redirect(req.query.action ? req.query.action : '/');
-        var { action } = req.query;
+        if (req.session.loggedIn) return res.redirect('/');
         res.render('login.ejs', {
-            msg: '',
-            action: action
+            msg: {
+                type: 'success',
+                content: ''
+            }
         });
     },
 
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     */
     login: async (req, res, next) => {
         var { username } = req.body;
         var { password } = req.body;
-        var { action } = req.body;
         var hashedPassword = crypto.createHash("md5").update(password).digest("hex");
     
         try {
@@ -24,11 +37,14 @@ module.exports = {
                 if (user.username === username && user.password === hashedPassword) {
                     req.session.loggedIn = true;
                     req.session.username = user.fullName;
-                    res.redirect(action ? action : '/');
+                    res.redirect('/');
                 }
             } else {
                 res.render('login.ejs', {
-                    msg: 'Incorrect username/password'
+                    msg: {
+                        type: 'danger',
+                        content: 'Incorrect username/password'
+                    }
                 });
             }
         } catch (error) {
@@ -37,7 +53,13 @@ module.exports = {
             });
         }
     },
-
+    
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     */
     logout: (req, res) => {
         req.session.destroy();
         res.redirect('/login');

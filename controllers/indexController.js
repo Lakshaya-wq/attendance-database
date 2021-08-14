@@ -1,9 +1,9 @@
-var Database = require('../Database');
-var database = new Database('db.sqlite3');
+let Database = require('../Database');
+let database = new Database('db.sqlite3');
 
 module.exports = async (req, res, next) => {
-    if (!req.session.loggedIn) return res.redirect('/login?action=/');
-    var username = req.session.username;
+    if (!req.session.loggedIn) return res.redirect('/login');
+    let username = req.session.username;
     let students = {
         xa: await database.getStudentsByClass('xa'),
         xb: await database.getStudentsByClass('xb'),

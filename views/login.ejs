@@ -33,7 +33,7 @@
             z-index: 2;
         }
 
-        .form-signin input[type="username"] {
+        .form-signin input[type="text"] {
             margin-bottom: -1px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
@@ -49,9 +49,9 @@
 <body class="text-center">
     <main class="form-signin">
         <div class="container">
-            <% if (msg.length >= 1) { %>
-                <div class="alert alert-danger alert-dismissible" role="alert" id="myAlert">
-                    <%= msg %>
+            <% if (msg.content.length >= 1) { %>
+                <div class="alert alert-<%= msg.type %> alert-dismissible" role="alert" id="myAlert">
+                    <%= msg.content %>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <% } %>
@@ -69,9 +69,8 @@
                             <input type="password" id="password" name="password" class="form-control" required placeholder="Password">
                             <label for="password">Password</label>
                         </div>
-                        <input hidden type="text" name="action" value="<%= action %>">
                         <div class="form-group">
-                            <input type="submit" value="Sign in" class="w-100 btn btn-lg btn-primary">
+                            <input type="submit" value="SIGN IN" class="w-100 btn btn-lg btn-primary">
                         </div>
                     </form>
                 </div>

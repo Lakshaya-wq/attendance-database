@@ -27,7 +27,7 @@ let parseDate = (_date,_format,_delimiter) => {
 module.exports = {
     attendanceController: async (req, res, next) => {
         let { standard } = req.params;
-        if (!req.session.loggedIn) return res.redirect(`/login?action=/attendance/${standard}`);
+        if (!req.session.loggedIn) return res.redirect(`/login`);
         let dateObj = new Date();
         let date = `${dateObj.getDate()}-${dateObj.getMonth()+1}-${dateObj.getFullYear()}`;
         let students = await database.getStudentsByClass(standard);
@@ -49,7 +49,7 @@ module.exports = {
 
     setAttendanceController: async (req, res, next) => {
         let { standard } = req.query;
-        if (!req.session.loggedIn) return res.redirect(`/login?action=${encodeURIComponent(`/attendance/${standard}`)}`);
+        if (!req.session.loggedIn) return res.redirect(`/login`);
         let { date } = req.query;
         let students = await database.getStudentsByClass(standard);
     
