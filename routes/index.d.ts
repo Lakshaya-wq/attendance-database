@@ -1,2 +1,2 @@
 export = router;
-declare var router: any;
+declare let router: any;

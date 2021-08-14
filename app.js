@@ -1,21 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var minifyHTML = require('express-minify-html');
-var minify = require('express-minify');
-var session = require('express-session');
-var MongoDBStore = require('connect-mongodb-session')(session);
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let minifyHTML = require('express-minify-html');
+let minify = require('express-minify');
+let session = require('express-session');
+let MongoDBStore = require('connect-mongodb-session')(session);
+let { randomBytes } = require('crypto');
 
-var studentRouter = require('./routes/student');
-var studentsRouter = require('./routes/students');
-var formRouter = require('./routes/form');
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
+let loginRouter = require('./routes/login');
+let indexRouter = require('./routes/index');
+let attendanceRouter = require('./routes/attendance');
+let formRouter = require('./routes/form');
 
-var app = express();
-var store = new MongoDBStore({
+let app = express();
+let store = new MongoDBStore({
   uri: process.env.DB_URI,
   collection: 'frst'
 });
@@ -45,23 +45,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  secret: "2a012d7e474f1bf7704e205168884aafae96528e8481b4e79597079fd5010cd7",
+  secret: randomBytes(64).toString('hex'),
   resave: true,
   store: store,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1000 * 60* 60
+    maxAge: 1000 * 60 * 60
   }
 }));
 
 app.use(minify());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', studentRouter);
-app.use('/', studentsRouter);
-app.use('/', formRouter);
-app.use('/', indexRouter);
 app.use('/', loginRouter);
+app.use('/', indexRouter);
+app.use('/', attendanceRouter);
+app.use('/', formRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
