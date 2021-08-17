@@ -1,3 +1,5 @@
-export function render(req: any, res: any, next: any): any;
-export function login(req: any, res: any, next: any): Promise<void>;
-export function logout(req: any, res: any, next: any): void;
+import express = require('express');
+
+export function render(req: express.Request, res: express.Response, next: express.NextFunction): any;
+export function login(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void>;
+export function logout(req: express.Request, res: express.Response, next: express.NextFunction): void;

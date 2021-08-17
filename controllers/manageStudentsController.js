@@ -1,14 +1,8 @@
 let Database = require('../Database');
 let database = new Database('db.sqlite3');
-let express = require('express');
 let { v4 } = require('uuid');
 
 module.exports = {
-    /**
-     * 
-     * @param {express.Request} req 
-     * @param {express.Response} res 
-     */
     manageStudentsController: async (req, res) => {
         if (!req.session.loggedIn) return res.redirect('/login');
         try {
@@ -35,11 +29,6 @@ module.exports = {
         }
     },
 
-    /**
-     * 
-     * @param {express.Request} req 
-     * @param {express.Response} res 
-     */
     deleteStudentController: async (req, res) => {
         if (!req.session.loggedIn) return res.redirect('/login');
         try {
@@ -51,11 +40,6 @@ module.exports = {
         }
     },
 
-    /**
-     * 
-     * @param {express.Request} req 
-     * @param {express.Response} res 
-     */
     editStudentController: async (req, res) => {
         if (!req.session.loggedIn) return res.redirect('/login');
         try {
@@ -70,13 +54,8 @@ module.exports = {
             res.status(500).end(error.message);
         }
     },
-
-    /**
-     * 
-     * @param {express.Request} req 
-     * @param {express.Response} res 
-     */
-     newStudentController: async (req, res) => {
+    
+    newStudentController: async (req, res) => {
         if (!req.session.loggedIn) return res.redirect('/login');
         try {
             let { studentRNo } = req.body;

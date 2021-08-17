@@ -1,2 +1,4 @@
+import express = require('express');
+
 export = app;
-declare var app: any;
+declare let app: express.Express;
