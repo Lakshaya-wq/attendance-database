@@ -133,6 +133,13 @@
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
   integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
+"@types/sqlite3@^3.1.7":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.7.tgz#84fbc65946603d15cff4968d0cb283d1879dd156"
+  integrity sha512-8FHV/8Uzd7IwdHm5mvmF2Aif4aC/gjrt4axWD9SmfaxITnOjtOhCbOSTuqv/VbH1uq0QrwlaTj9aTz3gmR6u4w==
+  dependencies:
+    "@types/node" "*"
+
 "@types/webidl-conversions@*":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@types/webidl-conversions/-/webidl-conversions-6.1.1.tgz#e33bc8ea812a01f63f90481c666334844b12a09e"

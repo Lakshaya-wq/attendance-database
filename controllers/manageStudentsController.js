@@ -1,6 +1,7 @@
 let Database = require('../Database');
 let database = new Database('db.sqlite3');
 let express = require('express');
+let { v4 } = require('uuid');
 
 module.exports = {
     /**
@@ -59,9 +60,30 @@ module.exports = {
         if (!req.session.loggedIn) return res.redirect('/login');
         try {
             let { id } = req.params;
-            let { newValue } = req.body;
-            await database.editStudent(id, "name", newValue);
-            res.end();
+            let { name } = req.body;
+            let { roll_no } = req.body;
+            await database.editStudent(id, "name", name);
+            await database.editStudent(id, "roll_no", roll_no);
+            res.end("Successfully edited student details");
+        } catch (error) {
+            console.log(error);
+            res.status(500).end(error.message);
+        }
+    },
+
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     */
+     newStudentController: async (req, res) => {
+        if (!req.session.loggedIn) return res.redirect('/login');
+        try {
+            let { studentRNo } = req.body;
+            let { studentName } = req.body;
+            let { standard } = req.params;
+            await database.addStudent(v4(), parseInt(studentRNo), standard.toString(), studentName);
+            res.end("Added student");
         } catch (error) {
             console.log(error);
             res.status(500).end();

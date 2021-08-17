@@ -43,7 +43,7 @@ module.exports = class Database {
 
     addStudent(id, roll_no, standard, name) {
         return new Promise((resolve, reject) => {
-            this.database.prepare(`INSERT INTO students VALUES (?, ?, ?, ?)`).run(id, roll_no, standard, name, function(err) {
+            this.database.prepare(`INSERT INTO students VALUES (?, ?, ?, ?)`).run(id, roll_no, standard.toUpperCase(), name, function(err) {
                 if (err) reject(err);
                 else resolve("successfully added student");
             });

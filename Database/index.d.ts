@@ -1,3 +1,5 @@
+import sqlite3 = require("sqlite3");
+
 export = Database;
 
 interface user {
@@ -15,12 +17,12 @@ interface student {
 
 declare class Database {
     constructor(file: string);
-    database: any;
+    database: sqlite3.Database;
     getStudent(roll_no: number, standard: string): Promise<student>;
     getStudentsByClass(standard: string): Promise<student[]>;
     registerUser(email: string, password: string): string;
-    verifyLogin(username: string): user;
+    verifyLogin(username: string): Promise<user>;
     addStudent(id: string, roll_no: number, standard: string, name: string): Promise<string>;
-    removeStudentById(id: any): Promise<string>;
-    editStudent(id: string, field: string, value: any): Promise<string>;
+    removeStudentById(id: string): Promise<string>;
+    editStudent(id: string, field: string, value: string): Promise<string>;
 }

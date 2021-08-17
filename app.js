@@ -18,7 +18,7 @@ let manageStudentsRouter = require('./routes/manageStudents');
 let app = express();
 let store = new MongoDBStore({
   uri: process.env.DB_URI,
-  collection: 'frst'
+  collection: 'sessions'
 });
 
 store.on('error', function(error) {
