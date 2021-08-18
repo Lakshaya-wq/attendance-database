@@ -95,7 +95,6 @@
     <div class="banner">
         <center>
             <h1>Welcome, <%= username %></h1>
-            <h2>Made with 💛 by <a style="text-decoration: none;" target="_blank" href="//github.com/Lakshaya-wq">Lakshaya</a></h2>
         </center>
     </div>
     <script type="text/javascript">
@@ -109,6 +108,16 @@
                 $(`<option value=${roll_no}>${roll_no}</option>`).appendTo('[name="roll_no"]');
             });
         });
+        window.onload = function showTime() {
+            var date = (new Date()).toLocaleTimeString();
+            $('.time').text(date);
+            setTimeout(showTime, 1000);
+        }
     </script>
+    <footer class="footer">
+        <div class="container-fluid">
+            <p class="text-muted">Made with 💛 by <a style="text-decoration: none;" target="_blank" href="//github.com/Lakshaya-wq">Lakshaya</a></p>
+        </div>
+    </footer>
 </body>
 </html>
