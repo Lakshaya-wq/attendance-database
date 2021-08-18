@@ -8,6 +8,8 @@ module.exports = {
         try {
             let { standard } = req.params;
             if (standard) {
+                // let students = await database.getStudentsByClass(standard);
+                // console.log(students);
                 let students = await database.getStudentsByClass(standard);
                 if (students.length >= 1) {
                     res.render('manageStudents', {
@@ -45,9 +47,7 @@ module.exports = {
         try {
             let { id } = req.params;
             let { name } = req.body;
-            let { roll_no } = req.body;
-            await database.editStudent(id, "name", name);
-            await database.editStudent(id, "roll_no", roll_no);
+            await database.editStudent(id, name);
             res.end("Successfully edited student details");
         } catch (error) {
             console.log(error);

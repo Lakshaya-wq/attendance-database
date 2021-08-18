@@ -1,6 +1,6 @@
 let Database = require('../Database');
 let database = new Database('db.sqlite3');
-let AttendanceDatabase = require('../models/database');
+let AttendanceRecord = require('../models/AttendanceRecord');
 
 module.exports = {
     studentAttendanceController: async (req, res, next) => {
@@ -8,7 +8,7 @@ module.exports = {
         let { standard } = req.query;
         if (!req.session.loggedIn) return res.redirect(`/login?action=${encodeURIComponent(`/student/?roll_no=${roll_no}&standard=${standard}`)}`);
         let student = await database.getStudent(roll_no, standard);
-        let attendance = await AttendanceDatabase.find({ standard: standard });
+        let attendance = await AttendanceRecord.find({ standard: standard });
         if (attendance.length >= 1) {
             res.render('getAttendance', {
                 attendance: attendance,
@@ -30,7 +30,7 @@ module.exports = {
             if (!month) {
                 try {
                     let students = await database.getStudentsByClass(standard);
-                    let attendance = await AttendanceDatabase.find({ standard: standard });
+                    let attendance = await AttendanceRecord.find({ standard: standard });
                     if (attendance.length >= 1) {
                         res.render('classAttendance', {
                         attendance: attendance,
@@ -51,7 +51,7 @@ module.exports = {
             } else {
                 try {
                     let students = await database.getStudentsByClass(standard);
-                    let attendance = await AttendanceDatabase.find({ standard: standard, month: month.toLowerCase() });
+                    let attendance = await AttendanceRecord.find({ standard: standard, month: month.toLowerCase() });
                     if (attendance.length >= 1) {
                         res.render('classAttendance', {
                             attendance: attendance,

@@ -15,6 +15,6 @@ const DatabaseSchema = mongoose.Schema({
     present: [ Number ]
 });
 
-const AttendanceDatabase = mongoose.model('AttendanceDatabase', DatabaseSchema);
+const AttendanceRecord = mongoose.model('AttendanceRecord', DatabaseSchema);
 
-module.exports = AttendanceDatabase;
+module.exports = AttendanceRecord;

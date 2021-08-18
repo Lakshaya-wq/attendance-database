@@ -1,6 +1,6 @@
 let Database = require('../Database');
 let database = new Database('db.sqlite3');
-let AttendanceDatabase = require('../models/database');
+let AttendanceRecord = require('../models/AttendanceRecord');
 
 let months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
@@ -31,7 +31,7 @@ module.exports = {
         let dateObj = new Date();
         let date = `${dateObj.getDate()}-${dateObj.getMonth()+1}-${dateObj.getFullYear()}`;
         let students = await database.getStudentsByClass(standard);
-        let attendance = await AttendanceDatabase.findOne({
+        let attendance = await AttendanceRecord.findOne({
             date: date,
             standard: standard
         });
@@ -53,14 +53,14 @@ module.exports = {
         let { date } = req.query;
         let students = await database.getStudentsByClass(standard);
     
-        AttendanceDatabase.findOne({
+        AttendanceRecord.findOne({
             date: date,
             standard: standard
         }, async (err, att) => {
             if (err) return res.render('error', { message: err.message });
             if (att) {
                 try {
-                    await AttendanceDatabase.updateOne({
+                    await AttendanceRecord.updateOne({
                         date: date,
                         standard: standard
                     },
@@ -75,7 +75,7 @@ module.exports = {
                             content: 'Success: updated attendance',
                             type: 'success'
                         },
-                        attendance: await AttendanceDatabase.findOne({
+                        attendance: await AttendanceRecord.findOne({
                             date: date,
                             standard: standard
                         })
@@ -85,7 +85,7 @@ module.exports = {
                     console.log(error);
                 }
             } else {
-                var newAttendance = new AttendanceDatabase({
+                var newAttendance = new AttendanceRecord({
                     month: months[parseDate(date, "dd-mm-yyyy", "-").getMonth()],
                     date: date,
                     standard: standard,
@@ -103,7 +103,7 @@ module.exports = {
                             content: 'Success: set attendance',
                             type: 'success'
                         },
-                        attendance: await AttendanceDatabase.findOne({
+                        attendance: await AttendanceRecord.findOne({
                             date: date,
                             standard: standard
                         })

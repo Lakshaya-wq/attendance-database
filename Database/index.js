@@ -1,26 +1,29 @@
-var sqlite3 = require('sqlite3');
+let sqlite3 = require('sqlite3');
+let Student = require('../models/Student');
 
 module.exports = class Database {
     constructor(file) {
         this.database = new sqlite3.Database(file);
     }
 
+
     getStudent(roll_no, standard) {
         return new Promise((resolve, reject) => {
-            this.database.get(`SELECT roll_no, name FROM students WHERE (roll_no="${roll_no}" AND class="${standard.toUpperCase()}")`, [], (err, row) => {
+            Student.findOne({ roll_no: roll_no, standard: standard }, function (err, student) {
                 if (err) reject(err);
-                else resolve(row);
+                else resolve(student);
             });
         });
     }
     
-    getStudentsByClass(standard) {
-        return new Promise((resolve, reject) => {
-            this.database.all(`SELECT id, roll_no, name FROM students WHERE class="${standard.toUpperCase()}" ORDER BY roll_no ASC`, [], (err, rows) => {
-                if (err) reject(err);
-                else resolve(rows);
-            });
-        });
+
+    async getStudentsByClass(standard) {
+        try {
+            let students = await Student.find({ standard: standard.toUpperCase() }).sort({ roll_no: 1 });
+            return students;
+        } catch (error) {
+            throw new Error("No Students found");
+        }
     }
 
     registerUser(email, password) {
@@ -41,29 +44,36 @@ module.exports = class Database {
         });
     }
 
+
     addStudent(id, roll_no, standard, name) {
         return new Promise((resolve, reject) => {
-            this.database.prepare(`INSERT INTO students VALUES (?, ?, ?, ?)`).run(id, roll_no, standard.toUpperCase(), name, function(err) {
-                if (err) reject(err);
-                else resolve("successfully added student");
+            var student = new Student({
+                _id: id,
+                roll_no: roll_no,
+                standard: standard.toUpperCase(),
+                name: name
             });
+            student.save().then(() => resolve("Successfully added student"))
+                .catch((e) => reject(e.message));
         });
     }
+
 
     removeStudentById(id) {
         return new Promise((resolve, reject) => {
-            this.database.prepare(`DELETE FROM students WHERE id=?`).run(id, function(err) {
-                if (err) reject(err.message);
-                else resolve("successfully deleted student");
-            });
+            Student.findByIdAndDelete(id).then(() => resolve("Successfully added student"))
+                .catch((e) => reject(e.message));
         });
     }
 
-    editStudent(id, field, value) {
+
+    editStudent(id, value) {
         return new Promise((resolve, reject) => {
-            this.database.prepare(`UPDATE students SET ${field}=? WHERE id="${id}"`).run(value, function(err) {
-                if (err) reject(err.message);
-                else resolve("successfully changed data");
+            Student.findByIdAndUpdate(id, {
+                name: value
+            }, (error) => {
+                if (error) reject(error.message);
+                else resolve("Successfully changed student data");
             });
         });
     }

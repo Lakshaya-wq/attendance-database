@@ -73,6 +73,16 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown4" data-bs-toggle="dropdown" aria-expanded="false" href="#">Manage Students</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown4" style="position: absolute; z-index: 1;">
+                            <li>
+                                <% for (let standard of Object.keys(students)) { %>
+                                    <li><a class="dropdown-item" href="/students/<%= standard %>/manage" target="_blank">Class <%= standard.toUpperCase() %></a></li>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -85,7 +95,7 @@
     <div class="banner">
         <center>
             <h1>Welcome, <%= username %></h1>
-            <!-- <h2>Made with 💛 by <a target="_blank" href="//github.com/Lakshaya-wq">Lakshaya Utreja</a></h2> -->
+            <h2>Made with 💛 by <a style="text-decoration: none;" target="_blank" href="//github.com/Lakshaya-wq">Lakshaya</a></h2>
         </center>
     </div>
     <script type="text/javascript">
