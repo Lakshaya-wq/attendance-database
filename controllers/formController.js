@@ -85,12 +85,21 @@ module.exports = {
                     console.log(error);
                 }
             } else {
-                var newAttendance = new AttendanceRecord({
-                    month: months[parseDate(date, "dd-mm-yyyy", "-").getMonth()],
-                    date: date,
-                    standard: standard,
-                    present: Object.keys(req.query.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
-                });
+                if (req.query.present) {
+                    var newAttendance = new AttendanceRecord({
+                        month: months[parseDate(date, "dd-mm-yyyy", "-").getMonth()],
+                        date: date,
+                        standard: standard,
+                        present: Object.keys(req.query.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
+                    });
+                } else {
+                    var newAttendance = new AttendanceRecord({
+                        month: months[parseDate(date, "dd-mm-yyyy", "-").getMonth()],
+                        date: date,
+                        standard: standard,
+                        present: []
+                    });
+                }
     
                 try {
                     await newAttendance.save();

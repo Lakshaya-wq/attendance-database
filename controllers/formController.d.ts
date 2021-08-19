@@ -1,2 +1,3 @@
-export function attendanceController(req: any, res: any, next: any): Promise<any>;
-export function setAttendanceController(req: any, res: any, next: any): Promise<any>;
+export function attendanceController(req: express.Request, req: express.Response, next: express.NextFunction): Promise<any>;
+export function setAttendanceController(req: express.Request, req: express.Response, next: express.NextFunction): Promise<any>;
+import express = require('express');
