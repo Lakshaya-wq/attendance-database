@@ -1,5 +1,5 @@
 let Database = require('../Database');
-let database = new Database('db.sqlite3');
+let database = new Database();
 let { v4 } = require('uuid');
 
 module.exports = {
@@ -8,8 +8,6 @@ module.exports = {
         try {
             let { standard } = req.params;
             if (standard) {
-                // let students = await database.getStudentsByClass(standard);
-                // console.log(students);
                 let students = await database.getStudentsByClass(standard);
                 if (students.length >= 1) {
                     res.render('manageStudents', {

@@ -105,7 +105,6 @@ th {
   float: right;
   margin-left: auto;
   margin-right: 5px;
-  margin-top: 5px;
 }
 
 .highlight {
@@ -228,7 +227,7 @@ div.inputs input + input {
   box-shadow: none !important;
 }
 
-/* .footer .container-fluid {
-  position: absolute;
-  
-} */
+td, th {
+  max-width: 100%;
+  white-space: nowrap;
+}

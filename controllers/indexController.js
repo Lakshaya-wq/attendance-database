@@ -1,5 +1,5 @@
 let Database = require('../Database');
-let database = new Database('db.sqlite3');
+let database = new Database();
 
 module.exports = async (req, res, next) => {
     if (!req.session.loggedIn) return res.redirect('/login');

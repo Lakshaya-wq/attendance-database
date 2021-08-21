@@ -1,12 +1,12 @@
 let Database = require('../Database');
-let database = new Database('db.sqlite3');
+let database = new Database();
 let AttendanceRecord = require('../models/AttendanceRecord');
 
 module.exports = {
     studentAttendanceController: async (req, res, next) => {
         let { roll_no } = req.query;
         let { standard } = req.query;
-        if (!req.session.loggedIn) return res.redirect(`/login?action=${encodeURIComponent(`/student/?roll_no=${roll_no}&standard=${standard}`)}`);
+        if (!req.session.loggedIn) return res.redirect(`/login`);
         let student = await database.getStudent(roll_no, standard);
         let attendance = await AttendanceRecord.find({ standard: standard });
         if (attendance.length >= 1) {
@@ -24,7 +24,7 @@ module.exports = {
     classAttendanceController: async (req, res, next) => {
         let { standard } = req.query;
         let { month } = req.query;
-        if (!req.session.loggedIn) return res.redirect(`/login?action=${encodeURIComponent(`/class/?standard=${standard}`)}`);
+        if (!req.session.loggedIn) return res.redirect(`/login`);
       
         if (standard) {
             if (!month) {
@@ -33,9 +33,10 @@ module.exports = {
                     let attendance = await AttendanceRecord.find({ standard: standard });
                     if (attendance.length >= 1) {
                         res.render('classAttendance', {
-                        attendance: attendance,
-                        students: students,
-                        standard: standard
+                            attendance: attendance,
+                            students: students,
+                            standard: standard,
+                            month: Date.now()
                         });
                     } else {
                         res.render('error', {
@@ -56,7 +57,8 @@ module.exports = {
                         res.render('classAttendance', {
                             attendance: attendance,
                             students: students,
-                            standard: standard
+                            standard: standard,
+                            month: month
                         });
                     } else {
                         res.render('error', {

@@ -1,5 +1,5 @@
 let Database = require('../Database');
-let database = new Database('db.sqlite3');
+let database = new Database();
 let AttendanceRecord = require('../models/AttendanceRecord');
 
 let months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
@@ -48,24 +48,18 @@ module.exports = {
     },
 
     setAttendanceController: async (req, res, next) => {
-        let { standard } = req.query;
+        let { standard } = req.body;
         if (!req.session.loggedIn) return res.redirect(`/login`);
-        let { date } = req.query;
+        let { date } = req.body;
         let students = await database.getStudentsByClass(standard);
     
-        AttendanceRecord.findOne({
-            date: date,
-            standard: standard
-        }, async (err, att) => {
+        AttendanceRecord.findOne({ date: date, standard: standard }).exec(async (err, att) => {
             if (err) return res.render('error', { message: err.message });
             if (att) {
                 try {
-                    await AttendanceRecord.updateOne({
-                        date: date,
-                        standard: standard
-                    },
+                    await AttendanceRecord.updateOne({ date: date, standard: standard }, 
                     {
-                        present: Object.keys(req.query.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
+                        present: Object.keys(req.body.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
                     });
                     res.render('form', {
                         students: students,
@@ -85,12 +79,12 @@ module.exports = {
                     console.log(error);
                 }
             } else {
-                if (req.query.present) {
+                if (req.body.present) {
                     var newAttendance = new AttendanceRecord({
                         month: months[parseDate(date, "dd-mm-yyyy", "-").getMonth()],
                         date: date,
                         standard: standard,
-                        present: Object.keys(req.query.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
+                        present: Object.keys(req.body.present).map((e) => (students.filter(({id}) => id === e))[0].roll_no)
                     });
                 } else {
                     var newAttendance = new AttendanceRecord({
@@ -121,6 +115,6 @@ module.exports = {
                     res.render('error', { message: error.message });
                 }
             }
-        });
+        })
     }
 }

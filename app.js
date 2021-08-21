@@ -43,7 +43,7 @@ app.use(minifyHTML({
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
   secret: randomBytes(64).toString('hex'),
@@ -51,7 +51,7 @@ app.use(session({
   store: store,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1000 * 60 * 60
+    maxAge: 1000 * 60 * 360
   }
 }));
 

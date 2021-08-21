@@ -33,7 +33,8 @@ mongoose.connect(process.env.DB_URI, {
   authSource: "admin",
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: true
+  useFindAndModify: true,
+  useCreateIndex: true
 }).then(() => server.listen(port, () => console.log(`listening on ${port}`)))
   .catch((e) => console.log(e));
 server.on('error', onError);

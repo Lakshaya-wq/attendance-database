@@ -1,15 +1,9 @@
 let Database = require('../Database');
-let database = new Database('db.sqlite3');
+let database = new Database();
 let crypto = require('crypto');
 let express = require('express');
 
 module.exports = {
-    /**
-     * 
-     * @param {express.Request} req 
-     * @param {express.Response} res 
-     * @param {express.NextFunction} next 
-     */
     render: (req, res, next) => {
         if (req.session.loggedIn) return res.redirect('/');
         res.render('login.ejs', {
@@ -25,7 +19,7 @@ module.exports = {
      * @param {express.Request} req 
      * @param {express.Response} res 
      * @param {express.NextFunction} next 
-     */
+     */    
     login: async (req, res, next) => {
         var { username } = req.body;
         var { password } = req.body;
@@ -54,12 +48,6 @@ module.exports = {
         }
     },
     
-    /**
-     * 
-     * @param {express.Request} req 
-     * @param {express.Response} res 
-     * @param {express.NextFunction} next 
-     */
     logout: (req, res) => {
         req.session.destroy();
         res.redirect('/login');
