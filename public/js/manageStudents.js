@@ -80,7 +80,7 @@ $(function() {
 });
 
 $('#add').click(function() {
-    let studentRNo = parseInt($('table tbody tr').last().prev().find('[type="roll_no"]').text())+1;
+    let studentRNo = $('table tbody tr').last().prev().find('[type="roll_no"]').text() ? parseInt($('table tbody tr').last().prev().find('[type="roll_no"]').text())+1 : 1;
     $('[name="studentRNo"]').val(studentRNo);
     $('#overlay-wrapper2').show().removeClass('hidden');
 });

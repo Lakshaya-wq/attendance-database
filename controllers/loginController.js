@@ -4,6 +4,12 @@ let crypto = require('crypto');
 let express = require('express');
 
 module.exports = {
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     */
     render: (req, res, next) => {
         if (req.session.loggedIn) return res.redirect('/');
         res.render('login.ejs', {
@@ -47,7 +53,13 @@ module.exports = {
             });
         }
     },
-    
+
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     */    
     logout: (req, res) => {
         req.session.destroy();
         res.redirect('/login');

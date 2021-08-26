@@ -9,18 +9,14 @@ module.exports = {
             let { standard } = req.params;
             if (standard) {
                 let students = await database.getStudentsByClass(standard);
-                if (students.length >= 1) {
-                    res.render('manageStudents', {
-                        students: students,
-                        msg: {
-                            type: 'success',
-                            content: ''
-                        },
-                        standard: standard
-                    });
-                } else {
-                    res.render('error', { message: "no students found" })
-                }
+                res.render('manageStudents', {
+                    students: students,
+                    msg: {
+                        type: 'success',
+                        content: ''
+                    },
+                    standard: standard
+                });
             } else {
                 res.render('error', { message: "Invalid standard" });
             }
