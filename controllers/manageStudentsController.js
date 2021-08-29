@@ -1,6 +1,6 @@
 let Database = require('../Database');
 let database = new Database();
-let { v4 } = require('uuid');
+let { v4: uuid } = require('uuid');
 
 module.exports = {
     manageStudentsController: async (req, res) => {
@@ -55,7 +55,7 @@ module.exports = {
             let { studentRNo } = req.body;
             let { studentName } = req.body;
             let { standard } = req.params;
-            await database.addStudent(v4(), parseInt(studentRNo), standard.toString(), studentName);
+            await database.addStudent(uuid(), parseInt(studentRNo), standard.toString(), studentName);
             res.end("Added student");
         } catch (error) {
             console.log(error);

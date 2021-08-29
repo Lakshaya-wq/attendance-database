@@ -1,6 +1,7 @@
 let Database = require('../Database');
 let database = new Database();
 let AttendanceRecord = require('../models/AttendanceRecord');
+let express = require('express');
 
 let months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
@@ -46,8 +47,15 @@ module.exports = {
             attendance: attendance
         });
     },
-
+    /**
+     * 
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     * @returns {void}
+     */
     setAttendanceController: async (req, res, next) => {
+        console.log(req.body.standard);
         let { standard } = req.body;
         if (!req.session.loggedIn) return res.redirect(`/login`);
         let { date } = req.body;
