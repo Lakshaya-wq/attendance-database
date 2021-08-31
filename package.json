@@ -7,7 +7,7 @@
     "dev": "nodemon ./bin/www --exec \"node --trace-warnings --trace-deprecation\""
   },
   "dependencies": {
-    "connect-mongodb-session": "^3.1.0",
+    "connect-mongodb-session": "^3.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~4.3.2",
     "ejs": "~3.1.6",
@@ -16,25 +16,15 @@
     "express-minify-html": "^0.12.0",
     "express-session": "^1.17.2",
     "http-errors": "~1.8.0",
-<<<<<<< HEAD
     "mongoose": "^5.13.7",
-=======
-    "mongoose": "^6.0.2",
->>>>>>> e5bd28f42437a1edfb9e29b8d655edb223e086b4
     "morgan": "~1.10.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/express": "types/npm-express",
     "@types/jquery": "^3.5.6",
-<<<<<<< HEAD
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
-=======
-    "@types/sqlite3": "^3.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.29.3",
-    "@typescript-eslint/parser": "^4.29.3",
->>>>>>> e5bd28f42437a1edfb9e29b8d655edb223e086b4
     "eslint": "^7.32.0",
     "eslint-plugin-jquery": "^1.5.1",
     "nodemon": "^2.0.12"
