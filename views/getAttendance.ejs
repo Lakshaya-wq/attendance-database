@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-    <title>Attendance</title>
+    <title>Attendance for student <%= student.name %></title>
 </head>
 <body>
     <div style="margin-top: 5px">
@@ -23,11 +23,6 @@
             <h2 class="date"><%= student.name %> (<%= student.roll_no %>)</h2>
         </center>
     </div>
-    <!-- <div>
-        <div class="ribbon-wrapper">
-          <div class="ribbon">DEV</div>
-        </div>
-      </div> -->
     <table class="table table-bordered table-light table-striped table-hover">
         <thead>
             <th>roll no</th>

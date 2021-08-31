@@ -66,4 +66,23 @@ module.exports = class Database {
             });
         });
     }
+
+    getUser(username) {
+        return new Promise((resolve, reject) => {
+            User.findOne({ username: username }).exec((err, user) => {
+                console.log(user);
+                if (err) reject(err);
+                else resolve(user);
+            });
+        });
+    }
+    
+    addAvatar(id, url) {
+        return new Promise((resolve, reject) => {
+            User.findByIdAndUpdate(id, { photoURL:  url}).exec((err, doc) => {
+                if (err) reject(err);
+                else resolve(doc);
+            });
+        });
+    }
 }

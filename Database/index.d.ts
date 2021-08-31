@@ -18,7 +18,6 @@ declare class Database {
     constructor();
     getStudent(roll_no: number, standard: string): Promise<student>;
     getStudentsByClass(standard: string): Promise<student[]>;
-    registerUser(email: string, password: string): string;
     verifyLogin(username: string): Promise<user>;
     addStudent(id: string, roll_no: number, standard: string, name: string): Promise<string>;
     removeStudentById(id: string): Promise<string>;

@@ -36,7 +36,7 @@ module.exports = {
             if (user) {
                 if (user.username === username && user.password === hashedPassword) {
                     req.session.loggedIn = true;
-                    req.session.username = user.fullName;
+                    req.session.user = user;
                     res.redirect('/');
                 }
             } else {
