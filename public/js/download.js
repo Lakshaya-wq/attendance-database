@@ -34,17 +34,17 @@ document.querySelector('#btn').addEventListener("click", function() {
     export_table_to_csv(html, `${$('.date').attr('month')}.csv`);
 });
 
-$(document).ready(function() {
-    $('#search').keyup(function() {
-        var value = $('#search').val().toLowerCase().trim();
-        $("tr").each(function(index) {
-            if (!index) return;
-            $(this).find("td").each(function() {
-                var id = $(this).text().toLowerCase().trim();
-                var not_found = (id.indexOf(value) == -1);
-                $(this).closest('tr').toggle(!not_found);
-                return not_found;
-            });
-        });
-    });
-});
+// $(document).ready(function() {
+//     $('#search').keyup(function() {
+//         var value = $('#search').val().toLowerCase().trim();
+//         $("tr").each(function(index) {
+//             if (!index) return;
+//             $(this).find("td").each(function() {
+//                 var id = $(this).text().toLowerCase().trim();
+//                 var not_found = (id.indexOf(value) == -1);
+//                 $(this).closest('tr').toggle(!not_found);
+//                 return not_found;
+//             });
+//         });
+//     });
+// });

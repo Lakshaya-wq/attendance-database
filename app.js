@@ -14,7 +14,6 @@ let indexRouter = require('./routes/index');
 let attendanceRouter = require('./routes/attendance');
 let formRouter = require('./routes/form');
 let manageStudentsRouter = require('./routes/manageStudents');
-let profileRouter = require('./routes/profile');
 
 let app = express();
 let store = new MongoDBStore({
@@ -64,7 +63,6 @@ app.use('/', indexRouter);
 app.use('/', attendanceRouter);
 app.use('/', formRouter);
 app.use('/', manageStudentsRouter);
-app.use('/', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
