@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www --exec \"node --trace-warnings --trace-deprecation\""
+    "dev": "nodemon ./bin/www --exec \"node --trace-warnings --trace-deprecation\"",
+    "test": "snyk test"
   },
   "dependencies": {
     "connect-mongodb-session": "^3.0.0",
@@ -27,6 +28,7 @@
     "@typescript-eslint/parser": "^4.29.2",
     "eslint": "^7.32.0",
     "eslint-plugin-jquery": "^1.5.1",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "snyk": "^1.695.0"
   }
 }
