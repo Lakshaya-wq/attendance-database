@@ -8,7 +8,7 @@
     "test": "snyk test"
   },
   "dependencies": {
-    "connect-mongodb-session": "^3.0.0",
+    "connect-mongodb-session": "^3.1.0",
     "cookie-parser": "~1.4.4",
     "debug": "~4.3.2",
     "ejs": "~3.1.6",
