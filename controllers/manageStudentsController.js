@@ -45,7 +45,7 @@ module.exports = {
             res.end("Successfully edited student details");
         } catch (error) {
             console.log(error);
-            res.status(500).end(error.getMessage());
+            res.status(500).end();
         }
     },
     

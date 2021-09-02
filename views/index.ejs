@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light navbar-expand-md" style="opacity: 100%;" role="navigation">
+    <nav class="navbar navbar-light bg-light navbar-expand-md" style="opacity: 100%; position: relative;" role="navigation">
         <div class="container-fluid">
             <a class="navbar-brand">Attendance Database</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">Attendance</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute; z-index: 1;">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <% for (let standard of Object.keys(students)) { %>
                                 <li><a class="dropdown-item" href="/attendance/<%= standard %>" target="_blank">Class <%= standard.toUpperCase() %></a></li>
                             <% } %>
@@ -29,7 +29,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Attendance</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1" style="position: absolute; z-index: 1;">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                             <form class="d-flex dropdown-item form-group-lg" method="GET" action="/class" target="_blank">
                                 <select class="form-select form-select-sm" aria-label="choose a class" name="standard" required>
                                     <option disabled selected value>-</option>
@@ -58,7 +58,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown3" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Student Attendance</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3" style="position: absolute; z-index: 1;">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
                             <li>
                                 <form class="d-flex dropdown-item form-group-lg" method="GET" action="/student" target="_blank">
                                     <select class="form-select form-select-sm" aria-label="choose a class" name="standard" required id="standard">
@@ -75,7 +75,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown4" data-bs-toggle="dropdown" aria-expanded="false" href="#">Manage Students</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown4" style="position: absolute; z-index: 1;">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
                             <li>
                                 <% for (let standard of Object.keys(students)) { %>
                                     <li><a class="dropdown-item" href="/students/<%= standard %>/manage" target="_blank">Class <%= standard.toUpperCase() %></a></li>
@@ -92,7 +92,7 @@
             </div>
         </div>
     </nav>
-    <div class="banner container">
+    <div class="banner container" style="z-index: -1;">
         <center>
             <h1>Welcome, <%= username %></h1>
         </center>

@@ -26,15 +26,8 @@ var server = http.createServer(app);
  */
 
 mongoose.connect(process.env.DB_URI, {
-  auth: {
-    user: process.env.MONGODB_USER,
-    password: process.env.MONGODB_PASSWORD
-  },
-  authSource: "admin",
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: true,
-  useCreateIndex: true
+  useUnifiedTopology: true
 }).then(() => server.listen(port, () => console.log(`listening on ${port}`)))
   .catch((e) => console.log(e));
 server.on('error', onError);
