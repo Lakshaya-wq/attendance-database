@@ -1,8 +1,6 @@
-# attendance-database
+# attendance-database ![](https://komarev.com/ghpvc/?username=lakshaya-wq&label=views)
 
 **attendance-database** is an attendance management system project written in NodeJS, with Express, EJS and MongoDB.
-
-![](https://komarev.com/ghpvc/?username=lakshaya-wq&label=views)
 
 ## Key Features
 
