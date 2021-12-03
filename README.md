@@ -1,6 +1,6 @@
 # attendance-database
 
-**attendance-database** is a hobby project written in NodeJS, Express, EJS and MongoDB to manage the attendance of students.
+**attendance-database** is an attendance management system project written in NodeJS, with Express, EJS and MongoDB.
 
 ## Key Features
 
