@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Manage Students</title>
+</head>
+<body>
+    <div style="margin-top: 5px">
+        <a href="/">
+            <i class="bi bi-house">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-house" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                    <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                </svg>
+            </i>
+        </a>
+        <center>
+            <h1 class="date" standard="<%= standard %>">Manage Students (<%= standard.toUpperCase() %>)</h1>
+        </center>
+    </div>    
+    <div id="overlay-wrapper" class="hidden">
+        <button onclick="javascript:$('#overlay-wrapper').hide()" class="btn btn-quit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </button>
+        <div id="overlay">
+            <center>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h3" style="color: #333;">Edit student</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="inputs">
+                                <input type="text" class="form-control" readonly name="roll_no" style="width: fit-content;">
+                                <input type="text" value="" name="name" required class="form-control">
+                            </div>
+                            <div class="btns">
+                                <button class="btn btn-danger" onclick="javascript:$('#overlay-wrapper').hide();$('input').val('')">Cancel</button>
+                                <button id="update" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <div id="overlay-wrapper2" class="hidden">
+        <button onclick="javascript:$('#overlay-wrapper2').hide()" class="btn btn-quit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </button>
+        <div id="overlay2">
+            <center>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h3" style="color: #333;">Add student</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="inputs">
+                                <input type="text" class="form-control" readonly name="studentRNo" style="width: fit-content;">
+                                <input type="text" value="" name="studentName" required class="form-control" minlength="1">
+                            </div>
+                            <div class="btns">
+                                <button class="btn btn-danger" onclick="javascript:$('#overlay-wrapper2').hide();$('input').val('')">Cancel</button>
+                                <button id="create" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-light table-striped table-hover">
+        <thead>
+            <th>roll no</th>
+            <th>name</th>
+            <th>actions</th>
+        </thead>
+        <tbody>
+            <% if (students.length >= 1) { %>
+                <% for (let student of students) { %>
+                    <tr>
+                        <td type="roll_no"><%= student.roll_no %></td>
+                        <td type="name" class="<%= student.id %>"><%= student.name %></td>
+                        <td>
+                            <button class="btn btn-sm dlt-btn" id="<%= student._id %>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                            </button>
+                            <button class="btn btn-sm edit-btn" id="<%= student._id %>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <tr>
+                    <td colspan="3">No Students Found</td>
+                </tr>
+            <% } %>
+            <tr>
+                <center>
+                    <td colspan="3">
+                        <button class="btn btn-primary" id="add">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </center>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <script src="/js/manageStudents.js"></script>
+</body>
+</html>

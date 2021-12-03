@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Database</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light navbar-expand-md" style="opacity: 100%; position: relative;" role="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand">Attendance Database</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width: 100%; height: 100%; position: relative;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <% for (let standard of classes) { %>
+                                <li><a class="dropdown-item" href="/attendance/<%= standard %>" target="_blank">Class <%= standard.toUpperCase() %></a></li>
+                            <% } %>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <form class="d-flex flex-column dropdown-item form-group-lg" method="GET" action="/class" target="_blank">
+                                <select class="form-select form-select-sm w-100" aria-label="choose a class" name="standard" required>
+                                    <option disabled selected value>-</option>
+                                    <% for (let standard of classes) { %>
+                                        <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
+                                    <% } %>
+                                </select>&nbsp;
+                                <select class="form-select form-select-sm w-100" aria-label="choose a month" name="month">
+                                    <option disabled selected value>-</option>
+                                    <option value="january">Jan</option>
+                                    <option value="february">Feb</option>
+                                    <option value="march">Mar</option>
+                                    <option value="april">Apr</option>
+                                    <option value="may">May</option>
+                                    <option value="june">Jun</option>
+                                    <option value="july">Jul</option>
+                                    <option value="august">Aug</option>
+                                    <option value="september">Sep</option>
+                                    <option value="october">Oct</option>
+                                    <option value="november">Nov</option>
+                                    <option value="december">Dec</option>
+                                </select>&nbsp;
+                                <input type="submit" value="Go" class="caps btn btn-sm btn-outline-secondary">
+                            </form>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown3" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Student Attendance</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                            <li>
+                                <form class="d-flex flex-column dropdown-item form-group-lg" method="GET" action="/student" target="_blank">
+                                    <select class="form-select form-select-sm w-100" aria-label="choose a class" name="standard" required id="standard">
+                                        <option disabled selected value>-</option>
+                                        <% for (let standard of classes) { %>
+                                            <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
+                                        <% } %>
+                                    </select>&nbsp;
+                                    <select class="form-select form-select-sm w-100" aria-label="choose a student" name="roll_no" required><option disabled selected value>-</option></select>&nbsp;
+                                    <input type="submit" value="Go" class="btn btn-sm btn-outline-secondary caps">
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link active" id="navbarDropdown4" data-bs-toggle="dropdown" aria-expanded="false" href="#">Manage Students</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                            <li>
+                                <% for (let standard of classes) { %>
+                                    <li><a class="dropdown-item" href="/class/<%= standard %>/manage" target="_blank">Class <%= standard.toUpperCase() %></a></li>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-danger caps" onclick="javascript:location.href='/auth/logout'">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="banner container" style="z-index: -1;">
+        <center>
+            <h4 class="caps">Welcome,</h4>
+            <h1 class="name"><%= username %></h1>
+        </center>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <p class="text-muted">Made with 💛 by <a style="text-decoration: none;" target="_blank" href="//github.com/Lakshaya-wq">Lakshaya</a></p>
+        </div>
+    </footer>
+    <script type="text/javascript">
+        $("#standard").change(function () {
+            var o = $(this).find("option:selected");
+            var v = o.val();
+            var s = JSON.parse('<%- JSON.stringify(students) %>').filter(
+                ({ standard }) => standard === v
+            );
+            $('[name="roll_no"]').find("option").remove().end();
+            s.forEach(({ roll_no: r }) => {
+                $(`<option value=${r}>${r}</option>`).appendTo('[name="roll_no"]');
+            });
+        });
+    </script>
+</body>
+</html>

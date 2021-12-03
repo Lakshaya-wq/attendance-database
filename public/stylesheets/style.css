@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+body {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    background-color: #282c34 !important;
+    color: white;
+}
+
+a {
+    color: #00b7ff;
+}
+
+table thead {
+    width: 100% !important;
+}
+
+table {
+    width: 100vw;
+    text-align: center;
+}
+
+.table {
+    margin-top: 5%;
+}
+
+.caps {
+    text-transform: uppercase;
+}
+
+li form {
+    padding: 0;
+    width: auto;
+    position: relative;
+}
+
+li form select {
+    text-transform: uppercase;
+    width: 100px !important;
+}
+
+div.banner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 25px;
+    background: grey;
+    height: 5px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    color: white;
+}
+
+.date {
+    color: white;
+}
+
+.error {
+    color: red;
+}
+
+th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+}
+
+.bi-house,
+.right {
+    float: right;
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+@media only screen and (max-width: 784px) {
+    li form {
+        width: 100%;
+        left: 0;
+    }
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+#overlay-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    min-width: 100%;
+}
+
+#overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+#overlay-wrapper2 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+}
+
+#overlay2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.footer {
+    position: absolute;
+    align-items: center;
+    bottom: 0 !important;
+    font-size: 20px;
+}
+
+.card-body .btn {
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+div.btns button.btn + button.btn {
+    margin-top: 5px;
+}
+
+.btns {
+    margin-top: 5px;
+}
+
+.card-body input {
+    display: block;
+    width: 100%;
+}
+
+div.inputs input + input {
+    margin-top: 5px;
+}
+.btn-quit {
+    position: absolute;
+    right: 0;
+}
+
+.dlt-btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.edit-btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+td,
+th {
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.name {
+    font-weight: 600;
+}
+
+.container > .card {
+    max-width: 550px !important;
+    width: 100% !important;
+}

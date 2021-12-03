@@ -1,0 +1,17 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-LODASHMERGE-173732:
+    - express-minify-html > lodash.merge:
+        reason: waiting for fix
+        expires: '2021-09-30T14:12:54.981Z'
+  SNYK-JS-LODASHMERGE-173733:
+    - express-minify-html > lodash.merge:
+        reason: waiting for fix
+        expires: '2021-09-30T14:12:54.981Z'
+  SNYK-JS-MPATH-1577289:
+    - connect-mongodb-session > archetype > mpath:
+        reason: waiting for fix
+        expires: '2021-10-10T03:36:36.050Z'
+patch: {}
