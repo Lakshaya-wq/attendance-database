@@ -1,5 +1,5 @@
-let mongoose = require('mongoose');
-let { v4: uuid } = require('uuid');
+let mongoose = require("mongoose");
+let { v4: uuid } = require("uuid");
 
 const UserSchema = mongoose.Schema({
     _id: String,
@@ -20,6 +20,6 @@ const UserSchema = mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

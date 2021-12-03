@@ -1,6 +1,6 @@
 {
     "env": {
-        "browser": false,
+        "node": true,
         "commonjs": true,
         "es2021": true
     },
@@ -13,10 +13,6 @@
     "parserOptions": {
         "ecmaVersion": 12
     },
-    "plugins": [
-        "@typescript-eslint",
-        "jquery"
-    ],
-    "rules": {
-    }
+    "plugins": ["@typescript-eslint", "jquery"],
+    "rules": {}
 }

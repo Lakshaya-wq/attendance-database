@@ -1,5 +1,5 @@
 {
     "verbose": false,
     "ignore": ["public/js/*"],
-    "ext": "js,ts,json"
+    "ext": "js,json,ejs"
 }

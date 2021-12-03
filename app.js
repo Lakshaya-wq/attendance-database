@@ -1,83 +1,87 @@
-let createError = require('http-errors');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
-let minifyHTML = require('express-minify-html');
-let minify = require('express-minify');
-let session = require('express-session');
-let MongoDBStore = require('connect-mongodb-session')(session);
-let { randomBytes } = require('crypto');
+// .env configuration
+require("dotenv").config();
 
-let loginRouter = require('./routes/login');
-let indexRouter = require('./routes/index');
-let attendanceRouter = require('./routes/attendance');
-let formRouter = require('./routes/form');
-let manageStudentsRouter = require('./routes/manageStudents');
+// necessary imports
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const minifyHTML = require("express-minify-html");
+const minify = require("express-minify");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
-let app = express();
-let store = new MongoDBStore({
-  uri: process.env.DB_URI,
-  collection: 'sessions'
-});
+// Routes import
+const authRoutes = require("./routes/auth.routes");
+const indexRoutes = require("./routes/index.routes");
+const attendanceRoutes = require("./routes/attendance.routes");
+const studentRoutes = require("./routes/student.routes");
+const classRoutes = require("./routes/class.routes");
 
-store.on('error', function(error) {
-  console.log(error);
-});
+// config
+const config = require("./config");
+
+// custom middleware
+const auth = require("./middleware/auth");
+
+// app initialization
+const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(minifyHTML({
-  override: true,
-  exception_url: false,
-  htmlMinifier: {
-    removeComments: true,
-    collapseWhitespace: true,
-    collapseBooleanAttributes: true,
-    removeAttributeQuotes: true,
-    removeEmptyAttributes: true,
-    minifyJS: true
-  }
-}));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
-app.use(logger('dev'));
+// mime type parser setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(session({
-  secret: randomBytes(64).toString('hex'),
-  resave: true,
-  store: store,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 1000 * 60 * 360
-  }
-}));
 
+// use minification
+app.use(
+    minifyHTML({
+        override: true,
+        exception_url: false,
+        htmlMinifier: {
+            removeComments: true,
+            collapseWhitespace: true,
+            collapseBooleanAttributes: true,
+            removeAttributeQuotes: true,
+            removeEmptyAttributes: true,
+            minifyJS: true
+        }
+    })
+);
 app.use(minify());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', loginRouter);
-app.use('/', indexRouter);
-app.use('/', attendanceRouter);
-app.use('/', formRouter);
-app.use('/', manageStudentsRouter);
+// logger setup
+app.use(logger("tiny"));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// cookie parser and session store setup
+app.use(cookieParser());
+const store = new MongoDBStore({
+    uri: config.DB_URI,
+    collection: "sessions"
 });
+store.on("error", console.log);
+app.use(
+    session({
+        secret: config.SESSION_SECRET,
+        resave: true,
+        store: store,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 1000 * 60 * 360
+        }
+    })
+);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// public file root setup
+app.use(express.static(path.join(__dirname, "public")));
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+// routes
+app.use("/auth", authRoutes);
+app.use("/", auth, indexRoutes);
+app.use("/attendance", auth, attendanceRoutes);
+app.use("/class", auth, classRoutes);
+app.use("/student", auth, studentRoutes);
 
 module.exports = app;

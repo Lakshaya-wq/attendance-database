@@ -1,24 +1,38 @@
-let Student = require('../models/Student');
-let User = require('../models/User');
+let Student = require("../models/Student");
+let User = require("../models/User");
 
 module.exports = class Database {
     constructor() {}
 
     getStudent(roll_no, standard) {
         return new Promise((resolve, reject) => {
-            Student.findOne({ roll_no: roll_no, standard: standard.toUpperCase() }).exec((err, student) => {
+            Student.findOne({
+                roll_no: roll_no,
+                standard: standard.toUpperCase()
+            }).exec((err, student) => {
                 if (err) reject(err);
                 else resolve(student);
-            })
+            });
         });
-    }   
+    }
+
+    getStudents() {
+        return new Promise((resolve, reject) => {
+            Student.find().exec((err, students) => {
+                if (err) reject(err);
+                else resolve(students);
+            });
+        });
+    }
 
     getStudentsByClass(standard) {
         return new Promise((resolve, reject) => {
-            Student.find({ standard: standard.toUpperCase() }).sort({ roll_no: 1 }).exec((err, students) => {
-                if (err) reject(err.message);
-                else resolve(students);
-            });
+            Student.find({ standard: standard.toUpperCase() })
+                .sort({ roll_no: 1 })
+                .exec((err, students) => {
+                    if (err) reject(err.message);
+                    else resolve(students);
+                });
         });
     }
 
@@ -30,7 +44,6 @@ module.exports = class Database {
             });
         });
     }
-
 
     addStudent(id, roll_no, standard, name) {
         return new Promise((resolve, reject) => {
@@ -47,7 +60,6 @@ module.exports = class Database {
         });
     }
 
-
     removeStudentById(id) {
         return new Promise((resolve, reject) => {
             Student.findByIdAndDelete(id).exec((err, doc) => {
@@ -56,7 +68,6 @@ module.exports = class Database {
             });
         });
     }
-
 
     editStudent(id, value) {
         return new Promise((resolve, reject) => {
@@ -76,13 +87,13 @@ module.exports = class Database {
             });
         });
     }
-    
+
     addAvatar(id, url) {
         return new Promise((resolve, reject) => {
-            User.findByIdAndUpdate(id, { photoURL:  url}).exec((err, doc) => {
+            User.findByIdAndUpdate(id, { photoURL: url }).exec((err, doc) => {
                 if (err) reject(err);
                 else resolve(doc);
             });
         });
     }
-}
+};

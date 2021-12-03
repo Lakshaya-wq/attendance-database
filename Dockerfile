@@ -1,7 +1,8 @@
 FROM node:16.11.1
 USER root
 WORKDIR /app
-COPY package*.json ./
+COPY package.json ./
+COPY yarn.lock ./
 RUN npm install
 COPY . .
 ENV NODE_ENV=production

@@ -1,4 +1,4 @@
-function download_csv(csv, filename) {
+function downloadCsv(csv, filename) {
     var csvFile;
     var downloadLink;
     csvFile = new Blob([csv], {
@@ -13,7 +13,7 @@ function download_csv(csv, filename) {
     document.body.removeChild(downloadLink);
 }
 
-function export_table_to_csv(html, filename) {
+function exportCsv(filename) {
     var csv = [];
     var rows = document.querySelectorAll("table tr");
 
@@ -22,29 +22,15 @@ function export_table_to_csv(html, filename) {
             cols = rows[i].querySelectorAll("td, th");
 
         for (var j = 0; j < cols.length; j++)
-            row.push(cols[j].innerText);
+            row.push(cols[j].innerText.replace("⁄", "/"));
         csv.push(row.join(","));
     }
 
-    download_csv(csv.join("\n"), filename);
+    downloadCsv(csv.join("\n"), filename);
 }
 
-document.querySelector('#btn').addEventListener("click", function() {
-    var html = document.querySelector("table").outerHTML;
-    export_table_to_csv(html, `${$('.date').attr('month')}.csv`);
-});
-
-// $(document).ready(function() {
-//     $('#search').keyup(function() {
-//         var value = $('#search').val().toLowerCase().trim();
-//         $("tr").each(function(index) {
-//             if (!index) return;
-//             $(this).find("td").each(function() {
-//                 var id = $(this).text().toLowerCase().trim();
-//                 var not_found = (id.indexOf(value) == -1);
-//                 $(this).closest('tr').toggle(!not_found);
-//                 return not_found;
-//             });
-//         });
-//     });
-// });
+document
+    .querySelector("#btn")
+    .addEventListener("click", () =>
+        exportCsv(`${$(".date").attr("month")}.csv`)
+    );
