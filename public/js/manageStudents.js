@@ -50,13 +50,13 @@ $("#overlay #update").on("click", function () {
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
-            name: name,
-            roll_no: roll_no
+            name,
+            roll_no
         }),
         complete: function (e) {
             if (e.status === 200) {
+                $(`.${id}`).text(name);
                 $("#overlay-wrapper").hide();
-                $(`.${id}`).html($('[name="name"]').val());
             }
         }
     });
@@ -81,15 +81,12 @@ $(function () {
 });
 
 $("#add").on("click", function () {
-    let studentRNo = $("table tbody tr")
+    const lastRow = $("table tbody tr")
         .last()
         .prev()
         .find('[type="roll_no"]')
-        .text()
-        ? parseInt(
-              $("table tbody tr").last().prev().find('[type="roll_no"]').text()
-          ) + 1
-        : 1;
+        .text();
+    const studentRNo = lastRow ? parseInt(lastRow) + 1 : 1;
     $('[name="studentRNo"]').val(studentRNo);
     $("#overlay-wrapper2").show().removeClass("hidden");
 });
