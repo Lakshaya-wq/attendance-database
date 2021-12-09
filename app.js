@@ -62,15 +62,20 @@ const store = new MongoDBStore({
     collection: "sessions"
 });
 store.on("error", console.log);
+
+// session setup
+app.set("trust proxy", 1);
 app.use(
     session({
         secret: config.SESSION_SECRET,
         resave: true,
-        store: store,
+        store,
         saveUninitialized: true,
         cookie: {
-            maxAge: 1000 * 60 * 360
-        }
+            maxAge: 1000 * 60 * 360,
+            secure: true
+        },
+        name: "auth"
     })
 );
 
