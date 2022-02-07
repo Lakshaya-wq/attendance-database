@@ -64,6 +64,7 @@ docker run -td -p 3000:3000 attendance-database:latest
 ## Upcoming
 
 -   Creating new standards/classes
+-   Specific years added to attendance data
 
 ## Contributing
 
