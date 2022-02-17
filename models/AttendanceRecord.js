@@ -4,7 +4,9 @@ const { months } = require("../constants");
 const DatabaseSchema = mongoose.Schema({
     month: {
         type: String,
-        default: months[new Date().getMonth()]
+        default: `${months[new Date().getMonth()]}-${
+            months[new Date().getFullYear()]
+        }`
     },
     date: {
         type: String,

@@ -4,10 +4,10 @@ const { months } = require("../constants");
 const AttendanceRecord = require("../models/AttendanceRecord");
 
 /**
- * @type {Date}
  * @param {String} _date
  * @param {String} _format
  * @param {String} _delimiter
+ * @returns {Date}
  */
 const parseDate = (_date, _format, _delimiter) => {
     var formatLowerCase = _format.toLowerCase();
@@ -40,104 +40,99 @@ module.exports = {
             standard: standard
         });
         res.render("form", {
-            students: students,
-            standard: standard,
-            date: date,
+            students,
+            standard,
+            date,
             msg: {
                 content: "",
                 type: "success"
             },
-            attendance: attendance
+            attendance
         });
     },
 
     setAttendance: async (req, res, next) => {
-        console.log(req.body.standard);
         let { standard } = req.body;
 
         let { date } = req.body;
         let students = await database.getStudentsByClass(standard);
 
-        AttendanceRecord.findOne({ date: date, standard: standard }).exec(
-            async (err, att) => {
-                if (err) return res.render("error", { message: err.message });
-                if (att) {
-                    try {
-                        await AttendanceRecord.updateOne(
-                            { date: date, standard: standard },
-                            {
-                                present: Object.keys(req.body.present).map(
-                                    (e) =>
-                                        students.filter(({ id }) => id === e)[0]
-                                            .roll_no
-                                )
-                            }
-                        );
-                        res.render("form", {
-                            students: students,
-                            standard: standard,
-                            date: date,
-                            msg: {
-                                content: "Success: updated attendance",
-                                type: "success"
-                            },
-                            attendance: await AttendanceRecord.findOne({
-                                date: date,
-                                standard: standard
-                            })
-                        });
-                    } catch (error) {
-                        res.end();
-                        console.log(error);
-                    }
-                } else {
-                    if (req.body.present) {
-                        var newAttendance = new AttendanceRecord({
-                            month: months[
-                                parseDate(date, "dd-mm-yyyy", "-").getMonth()
-                            ],
-                            date: date,
-                            standard: standard,
+        AttendanceRecord.findOne({ date, standard }).exec(async (err, att) => {
+            if (err) return res.render("error", { message: err.message });
+            if (att) {
+                try {
+                    await AttendanceRecord.updateOne(
+                        { date, standard },
+                        {
                             present: Object.keys(req.body.present).map(
                                 (e) =>
-                                    students.filter(({ id }) => id === e)[0]
-                                        .roll_no
+                                    students.find(({ id }) => id === e).roll_no
                             )
-                        });
-                    } else {
-                        var newAttendance = new AttendanceRecord({
-                            month: months[
-                                parseDate(date, "dd-mm-yyyy", "-").getMonth()
-                            ],
-                            date: date,
-                            standard: standard,
-                            present: []
-                        });
-                    }
+                        }
+                    );
+                    res.render("form", {
+                        students,
+                        standard,
+                        date,
+                        msg: {
+                            content: "Success: updated attendance",
+                            type: "success"
+                        },
+                        attendance: await AttendanceRecord.findOne({
+                            date,
+                            standard
+                        })
+                    });
+                } catch (error) {
+                    res.end();
+                    console.log(error);
+                }
+            } else {
+                let currentDate = parseDate(date, "dd-mm-yyyy", "-");
+                let currentMonth = `${
+                    months[currentDate.getMonth()]
+                }-${currentDate.getFullYear()}`;
 
-                    try {
-                        await newAttendance.save();
+                if (req.body.present) {
+                    var newAttendance = new AttendanceRecord({
+                        month: currentMonth,
+                        date,
+                        standard,
+                        present: Object.keys(req.body.present).map(
+                            (e) => students.find(({ id }) => id === e).roll_no
+                        )
+                    });
+                } else {
+                    var newAttendance = new AttendanceRecord({
+                        month: currentMonth,
+                        date,
+                        standard,
+                        present: []
+                    });
+                }
 
-                        res.render("form", {
-                            students: students,
-                            standard: standard,
-                            date: `${new Date().getDate()}-${
-                                new Date().getMonth() + 1
-                            }-${new Date().getFullYear()}`,
-                            msg: {
-                                content: "Success: set attendance",
-                                type: "success"
-                            },
-                            attendance: await AttendanceRecord.findOne({
-                                date: date,
-                                standard: standard
-                            })
-                        });
-                    } catch (error) {
-                        res.render("error", { message: error.message });
-                    }
+                try {
+                    await newAttendance.save();
+
+                    res.render("form", {
+                        students,
+                        standard,
+                        date: `${new Date().getDate()}-${
+                            new Date().getMonth() + 1
+                        }-${new Date().getFullYear()}`,
+                        msg: {
+                            content: "Success: set attendance",
+                            type: "success"
+                        },
+                        attendance: await AttendanceRecord.findOne({
+                            date,
+                            standard
+                        })
+                    });
+                } catch (error) {
+                    res.render("error", { message: error.message });
                 }
             }
-        );
+        });
     }
 };

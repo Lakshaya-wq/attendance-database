@@ -33,13 +33,13 @@ module.exports = {
                 try {
                     let students = await database.getStudentsByClass(standard);
                     let attendance = await AttendanceRecord.find({
-                        standard: standard
+                        standard
                     });
                     if (attendance.length >= 1) {
                         res.render("classAttendance", {
-                            attendance: attendance,
-                            students: students,
-                            standard: standard,
+                            attendance,
+                            students,
+                            standard,
                             month: Date.now()
                         });
                     } else {
@@ -56,15 +56,15 @@ module.exports = {
                 try {
                     let students = await database.getStudentsByClass(standard);
                     let attendance = await AttendanceRecord.find({
-                        standard: standard,
+                        standard,
                         month: month.toLowerCase()
                     });
                     if (attendance.length >= 1) {
                         res.render("classAttendance", {
-                            attendance: attendance,
-                            students: students,
-                            standard: standard,
-                            month: month
+                            attendance,
+                            students,
+                            standard,
+                            month
                         });
                     } else {
                         res.render("error", {

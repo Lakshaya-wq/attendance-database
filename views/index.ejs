@@ -31,26 +31,14 @@
                         <a class="dropdown-toggle nav-link active" id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" href="#">View Attendance</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                             <form class="d-flex flex-column dropdown-item form-group-lg" method="GET" action="/class" target="_blank">
-                                <select class="form-select form-select-sm w-100" aria-label="choose a class" name="standard" required>
+                                <select class="form-select form-select-sm w-100" aria-label="choose a class" name="standard" required id="standard__all">
                                     <option disabled selected value>-</option>
                                     <% for (let standard of classes) { %>
                                         <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
                                     <% } %>
                                 </select>&nbsp;
-                                <select class="form-select form-select-sm w-100" aria-label="choose a month" name="month">
+                                <select class="form-select form-select-sm w-100" aria-label="choose a month" name="month" required>
                                     <option disabled selected value>-</option>
-                                    <option value="january">Jan</option>
-                                    <option value="february">Feb</option>
-                                    <option value="march">Mar</option>
-                                    <option value="april">Apr</option>
-                                    <option value="may">May</option>
-                                    <option value="june">Jun</option>
-                                    <option value="july">Jul</option>
-                                    <option value="august">Aug</option>
-                                    <option value="september">Sep</option>
-                                    <option value="october">Oct</option>
-                                    <option value="november">Nov</option>
-                                    <option value="december">Dec</option>
                                 </select>&nbsp;
                                 <input type="submit" value="Go" class="caps btn btn-sm btn-outline-secondary">
                             </form>
@@ -61,7 +49,7 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
                             <li>
                                 <form class="d-flex flex-column dropdown-item form-group-lg" method="GET" action="/student" target="_blank">
-                                    <select class="form-select form-select-sm w-100" aria-label="choose a class" name="standard" required id="standard">
+                                    <select class="form-select form-select-sm w-100" aria-label="choose a class" name="standard" required id="standard__individual">
                                         <option disabled selected value>-</option>
                                         <% for (let standard of classes) { %>
                                             <option value="<%= standard %>"><%= standard.toUpperCase() %></option>
@@ -103,8 +91,8 @@
             <p class="text-muted">Made with 💛 by <a style="text-decoration: none;" target="_blank" href="//github.com/Lakshaya-wq">Lakshaya</a></p>
         </div>
     </footer>
-    <script type="text/javascript">
-        $("#standard").change(function () {
+    <script type="text/javascript" defer>
+        $("#standard__individual").change(function () {
             var o = $(this).find("option:selected");
             var v = o.val();
             var s = JSON.parse('<%- JSON.stringify(students) %>').filter(
@@ -114,6 +102,20 @@
             s.forEach(({ roll_no: r }) => {
                 $(`<option value=${r}>${r}</option>`).appendTo('[name="roll_no"]');
             });
+        });
+
+        $("#standard__all").change(function () {
+            var o = $(this).find("option:selected");
+            var v = o.val();
+            var s = JSON.parse('<%- JSON.stringify(months) %>').find(
+                ({ standard }) => standard === v
+            );
+            $('[name="month"]').find("option").remove().end();
+            if (s.months.length >= 1) {
+                s.months.forEach((m) => $(`<option value=${m}>${m}</option>`).appendTo('[name="month"]'));
+            } else {
+                $(`<option disabled value>No records</option>`).appendTo('[name="month"]')
+            }
         });
     </script>
 </body>
