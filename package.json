@@ -18,7 +18,7 @@
         "express-minify": "^1.0.0",
         "express-minify-html-2": "^1.0.1",
         "express-session": "^1.17.2",
-        "mongoose": "^6.4.4",
+        "mongoose": "^6.4.6",
         "morgan": "~1.10.0",
         "uuid": "^8.3.2"
     },
