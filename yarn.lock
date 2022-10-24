@@ -1693,10 +1693,10 @@ smart-buffer@^4.2.0:
   resolved "https://registry.yarnpkg.com/smart-buffer/-/smart-buffer-4.2.0.tgz#6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae"
   integrity sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==
 
-snyk@^1.989.0:
-  version "1.989.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.989.0.tgz#935799ff71ba017793797b73774ee777145c5a01"
-  integrity sha512-PkKqNYogzGo7MUw23IrWEmzQi2cZuWIDCvW/Y3F96tZOv29eC8PzXTj2ebwex4U3rSmK/RpVg1RLMGLcG1rRmw==
+snyk@^1.1041.0:
+  version "1.1041.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1041.0.tgz#19d2d28fccf7318e5b598ff7096c64e4cc0535b2"
+  integrity sha512-rIKDbppZV0uRa3sbdcSoN+anbbl7RvzDrsV+/n8Yi5zEtbYAR0aCq07k4hD/QjBQ/EavZ05/ok29dLYqmJqbMQ==
 
 socks@^2.6.2:
   version "2.6.2"
