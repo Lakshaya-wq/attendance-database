@@ -30,6 +30,6 @@
         "eslint": "^8.23.0",
         "eslint-plugin-jquery": "^1.5.1",
         "nodemon": "^2.0.19",
-        "snyk": "^1.989.0"
+        "snyk": "^1.1058.0"
     }
 }
