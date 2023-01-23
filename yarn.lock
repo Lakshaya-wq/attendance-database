@@ -564,10 +564,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dotenv@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
-  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
+dotenv@^16.0.1:
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -1693,10 +1693,10 @@ smart-buffer@^4.2.0:
   resolved "https://registry.yarnpkg.com/smart-buffer/-/smart-buffer-4.2.0.tgz#6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae"
   integrity sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==
 
-snyk@^1.989.0:
-  version "1.989.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.989.0.tgz#935799ff71ba017793797b73774ee777145c5a01"
-  integrity sha512-PkKqNYogzGo7MUw23IrWEmzQi2cZuWIDCvW/Y3F96tZOv29eC8PzXTj2ebwex4U3rSmK/RpVg1RLMGLcG1rRmw==
+snyk@^1.1088.0:
+  version "1.1088.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1088.0.tgz#7ccb3ed17f2ee2d97f3cd1c1062058c8396499d8"
+  integrity sha512-kYpiwuF0spEVAfGiBHWByu+Py4QnPbKoyz2VsnPEnmVcvjbGp2Te2XenDDUGQa5ZG3GXjUCeX5sFJ3yvmBgXwg==
 
 socks@^2.6.2:
   version "2.6.2"
